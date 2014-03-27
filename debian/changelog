@@ -1,0 +1,8 @@
+ros-hydro-roseus (1.0.1-0raring) raring; urgency=high
+
+  * roseus: add version numeber to 1.0.0
+  * Contributors: Kei Okada, Ryohei Ueda, Yohei Kakiuchi, Haseru Chen, Yuki Furuta, Yuto Inagaki, kazuto Murase, Eisoku Kuroiwa, Manabu Saito, Hiroyuki Mikita, Shunnich Nozawa
+
+ -- Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>  Wed, 26 Mar 2014 15:00:00 -0000
+
+
