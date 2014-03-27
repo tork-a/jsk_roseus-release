@@ -1,0 +1,8 @@
+ros-hydro-euslisp (1.0.1-0precise) precise; urgency=high
+
+  * euslisp/roseus: add version numeber to 1.0.0
+  * Contributors: Kei Okada, Manabu saito, Masaki Murooka, Shunnichi Nozawa, Youhei Kakiuchi
+
+ -- ROS package maintained by Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>  Wed, 26 Mar 2014 15:00:00 -0000
+
+
