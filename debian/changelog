@@ -1,0 +1,33 @@
+ros-hydro-euslisp (1.0.4-0quantal) quantal; urgency=high
+
+  * try to download jskeus for 10 times
+  * do not set INCLUDE_DIRS to jskeus/eus/include, which cause error in roseus as "Project 'euslisp' specifies 'include' as an include dir, which is not found"
+  * Contributors: Kei Okada
+
+ -- ROS package maintained by Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>  Sun, 30 Mar 2014 15:00:00 -0000
+
+ros-hydro-euslisp (1.0.3-0quantal) quantal; urgency=high
+
+  * euslisp: unittest.l, uses numnber of test, not number of assert
+  * euslisp: unittest.l, force error if signal or error
+  * euslisp: add build_depend to libpq-dev, see issue #8 <https://github.com/jsk-ros-pkg/jsk_roseus/issues/8>
+  * Contributors: Kei Okada
+
+ -- ROS package maintained by Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>  Fri, 28 Mar 2014 15:00:00 -0000
+
+ros-hydro-euslisp (1.0.2-0quantal) quantal; urgency=high
+
+  * euslisp: add git to depends
+  * test/unittest.l: check test/results/failures numbers, return -1 if it fail to execute, force remove test results
+  * Contributors: Kei Okada
+
+ -- ROS package maintained by Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>  Thu, 27 Mar 2014 15:00:00 -0000
+
+ros-hydro-euslisp (1.0.1-0quantal) quantal; urgency=high
+
+  * euslisp/roseus: add version numeber to 1.0.0
+  * Contributors: Kei Okada, Manabu saito, Masaki Murooka, Shunnichi Nozawa, Youhei Kakiuchi
+
+ -- ROS package maintained by Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>  Wed, 26 Mar 2014 15:00:00 -0000
+
+
