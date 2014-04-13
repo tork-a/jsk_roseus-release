@@ -1,3 +1,25 @@
+## jsk_roseus (groovy) - 1.1.3-0
+
+User `k-okada@kokada-t430s` released the packages in the `jsk_roseus` repository into the `groovy` distro by running `/usr/bin/bloom-release jsk_roseus --track groovy --rosdistro groovy` on `Sun, 13 Apr 2014 15:35:09 -0000`
+
+These packages were released:
+- `euslisp`
+- `geneus`
+- `roseus`
+
+Version of package(s) in repository `jsk_roseus`:
+- rosdistro version: `1.1.2-0`
+- old version: `1.1.2-0`
+- new version: `1.1.3-0`
+
+Versions of tools used:
+- bloom version: `0.5.2`
+- catkin_pkg version: `0.1.25`
+- rosdep version: `0.10.25`
+- rosdistro version: `0.3.4`
+- vcstools version: `0.1.33`
+
+
 ## jsk_roseus (hydro) - 1.1.3-0
 
 User `k-okada@kokada-t430s` released the packages in the `jsk_roseus` repository into the `hydro` distro by running `/usr/bin/bloom-release jsk_roseus --track hydro --rosdistro hydro` on `Sun, 13 Apr 2014 15:31:34 -0000`
