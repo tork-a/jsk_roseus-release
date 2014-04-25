@@ -17,10 +17,10 @@ if (${roseus_msgs_generate})
     moveit_setup_assistant
     pr2_moveit_plugins
     # pr2eus
-    pr2_msgs
-    pr2_controllers_msgs
+    # pr2_msgs
+    # pr2_controllers_msgs
     control_msgs
-    move_base_msgs
+    # move_base_msgs
     nav_msgs
     dynamic_reconfigure
 
