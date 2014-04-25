@@ -1,0 +1,12 @@
+Source: ros-hydro-geneus
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 7.0.50~), ros-hydro-catkin, ros-hydro-euslisp, ros-hydro-genmsg, ros-hydro-rospy
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-hydro-geneus
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-hydro-euslisp, ros-hydro-genmsg, ros-hydro-rospy
+Description: EusLisp ROS message and service generators
