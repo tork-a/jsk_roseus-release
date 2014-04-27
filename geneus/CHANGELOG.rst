@@ -2,6 +2,9 @@
 Changelog for package geneus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.6 (2014-04-28)
+------------------
+
 1.1.5 (2014-04-27)
 ------------------
 * compile all dependent packages
