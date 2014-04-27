@@ -1,4 +1,4 @@
-From e9906afc3c17da99dc41876519b505995394713e Mon Sep 17 00:00:00 2001
+From b054fcf23a515efd198f825c27707462794d10a4 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 27 Apr 2014 17:31:36 +0900
 Subject: [PATCH] add deb for ros build firm
@@ -8,7 +8,7 @@ Subject: [PATCH] add deb for ros build firm
  1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/package.xml b/package.xml
-index af0378a..ed7179b 100644
+index 91dd6f3..ec9d670 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -13,14 +13,14 @@
