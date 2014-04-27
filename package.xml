@@ -14,7 +14,7 @@
 
   <!-- this build depends is commented in at jsk_roseus-release -->
   <build_depend>rviz</build_depend>
-  <!-- <build_depend>moveit_full_pr2</build_depend> -->
+  <build_depend>moveit_full_pr2</build_depend>
   <build_depend>pr2_msgs</build_depend>
   <build_depend>pr2_controllers_msgs</build_depend>
   <build_depend>control_msgs</build_depend>
