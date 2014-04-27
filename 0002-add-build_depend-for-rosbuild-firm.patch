@@ -1,7 +1,7 @@
 From c3275d058b5c3e0b3960acbd3ae19669067e2a08 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 27 Apr 2014 16:03:33 +0900
-Subject: [PATCH 2/2] add build_depend for rosbuild firm
+Subject: [PATCH 2/3] add build_depend for rosbuild firm
 
 ---
  package.xml |    2 +-
