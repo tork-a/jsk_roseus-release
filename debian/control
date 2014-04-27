@@ -1,0 +1,12 @@
+Source: ros-hydro-roseus-msgs
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 7.0.50~), ros-hydro-catkin, ros-hydro-geneus
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-hydro-roseus-msgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-hydro-geneus
+Description: Special package that generates roseus msgs for all installed packages
