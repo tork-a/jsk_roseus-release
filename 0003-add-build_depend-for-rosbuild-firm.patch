@@ -1,4 +1,4 @@
-From 16606e372ee06951aa225c7a39250d5bdae846a9 Mon Sep 17 00:00:00 2001
+From 028183250186b2fa00d88142febd99efe852328a Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 27 Apr 2014 16:08:05 +0900
 Subject: [PATCH 3/3] add build_depend for rosbuild firm
