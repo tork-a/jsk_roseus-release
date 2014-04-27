@@ -1,4 +1,4 @@
-From b529ebdd211d54d2f6780961db204f128fe83560 Mon Sep 17 00:00:00 2001
+From 238521506fef43a7ccfeba60ec4e06895207d43f Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Fri, 25 Apr 2014 16:47:38 +0900
 Subject: [PATCH] remove unsupported packages for groovy
