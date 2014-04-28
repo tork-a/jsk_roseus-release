@@ -1,4 +1,4 @@
-From 6c36b270522127c8aa38104ba05e8eb1358aed23 Mon Sep 17 00:00:00 2001
+From 97ec4fbfaa034ba0501b370f5a1e1124aaa65e71 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 27 Apr 2014 16:18:31 +0900
 Subject: [PATCH] add build_depend for ros build firm
