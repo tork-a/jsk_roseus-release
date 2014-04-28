@@ -1,3 +1,27 @@
+## jsk_roseus (hydro) - 1.1.7-1
+
+The packages in the `jsk_roseus` repository were released into the `hydro` distro by running `/var/lib/jenkins/send_to_bloom.py jsk-ros-pkg jsk_roseus` on `Mon, 28 Apr 2014 12:20:43 -0000`
+
+These packages were released:
+- `euslisp`
+- `geneus`
+- `jsk_roseus`
+- `roseus`
+- `roseus_msgs`
+
+Version of package(s) in repository `jsk_roseus`:
+- rosdistro version: `1.1.6-0`
+- old version: `1.1.7-0`
+- new version: `1.1.7-1`
+
+Versions of tools used:
+- bloom version: `0.5.4`
+- catkin_pkg version: `0.2.1`
+- rosdep version: `0.10.27`
+- rosdistro version: `0.3.5`
+- vcstools version: `0.1.33`
+
+
 ## jsk_roseus (hydro) - 1.1.7-0
 
 The packages in the `jsk_roseus` repository were released into the `hydro` distro by running `/usr/bin/bloom-release jsk_roseus --track hydro --rosdistro hydro` on `Mon, 28 Apr 2014 09:13:55 -0000`
