@@ -2,6 +2,12 @@
 Changelog for package roseus_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.8 (2014-05-02)
+------------------
+* run rosdep init and rosdep update before create messages
+* add more package to depends
+* Contributors: Kei Okada
+
 1.1.7 (2014-04-28)
 ------------------
 * use catkin to install genrated messages
