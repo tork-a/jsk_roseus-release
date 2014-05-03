@@ -1,0 +1,30 @@
+From bc7777532dafcdeb947b59a30715be990a5811e6 Mon Sep 17 00:00:00 2001
+From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Date: Sun, 4 May 2014 05:04:48 +0900
+Subject: [PATCH] remove executive_smach for groovy
+
+---
+ package.xml |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/package.xml b/package.xml
+index 194c7e5..1a60ad9 100644
+--- a/package.xml
++++ b/package.xml
+@@ -21,11 +21,11 @@
+ 
+   <build_depend>euslisp</build_depend>
+   <build_depend>roseus</build_depend>
+-  <build_depend>executive_smach</build_depend>
++  <!-- <build_depend>executive_smach</build_depend> -->
+ 
+   <run_depend>euslisp</run_depend>
+   <run_depend>roseus</run_depend>
+-  <run_depend>executive_smach</run_depend>
++  <!-- <run_depend>executive_smach</run_depend> -->
+ 
+   <!-- <test_depend>euslisp</test_depend> -->
+   <!-- <test_depend>roseus</test_depend> -->
+-- 
+1.7.9.5
+
