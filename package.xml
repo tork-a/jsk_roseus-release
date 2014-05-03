@@ -13,7 +13,6 @@
   <build_depend>geneus</build_depend>
 
   <!-- this build depends is commented in at jsk_roseus-release -->
-<!--
   <build_depend>rviz</build_depend>
   <build_depend>moveit_full_pr2</build_depend>
   <build_depend>control_msgs</build_depend>
@@ -22,7 +21,7 @@
   <build_depend>roseus</build_depend>
   <build_depend>jsk_common</build_depend>
   <build_depend>jsk_recognition</build_depend>
-  -->
+
 <!-- not supported in groovy 
   <build_depend>pr2_msgs</build_depend>
   <build_depend>pr2_controllers_msgs</build_depend>
