@@ -2,6 +2,14 @@
 Changelog for package roseus_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.10 (2014-05-03)
+-------------------
+* roseus_msgs depends on roseus, since pr2eus depends on roseus_msgs
+* Contributors: Kei Okada
+
+1.1.9 (2014-05-03)
+------------------
+
 1.1.8 (2014-05-02)
 ------------------
 * run rosdep init and rosdep update before create messages
