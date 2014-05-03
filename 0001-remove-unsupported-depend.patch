@@ -1,4 +1,4 @@
-From 61d5a78dcb746d870676116579084a4f7eea6027 Mon Sep 17 00:00:00 2001
+From 216bfef03ab29961f2202935d152fe64b4ba161b Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sat, 3 May 2014 10:38:06 +0900
 Subject: [PATCH] remove unsupported depend
@@ -8,7 +8,7 @@ Subject: [PATCH] remove unsupported depend
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/package.xml b/package.xml
-index d192b60..85e0523 100644
+index 5451a7e..0c8df50 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -13,7 +13,6 @@
