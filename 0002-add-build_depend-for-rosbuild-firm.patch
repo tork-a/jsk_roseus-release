@@ -1,4 +1,4 @@
-From bc2a38a450e1686b8bab9ea75b9226ea4742f14c Mon Sep 17 00:00:00 2001
+From 12b84765e22be70b0f9e703c3c5465f21d30aa95 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 27 Apr 2014 16:03:33 +0900
 Subject: [PATCH 2/3] add build_depend for rosbuild firm
@@ -8,7 +8,7 @@ Subject: [PATCH 2/3] add build_depend for rosbuild firm
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/package.xml b/package.xml
-index ed7179b..95c5576 100644
+index f2a80fa..7f7e12a 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -14,7 +14,7 @@
