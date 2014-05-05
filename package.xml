@@ -13,7 +13,7 @@
   <build_depend>geneus</build_depend>
 
   <!-- this build depends is commented in at jsk_roseus-release -->
-<!-- comment in this line: keep 3 space line so that we do not have to re-work when we add new depend packages
+<!-- comment in this line: keep 3 space line so that we do not have to re-work when we add new depend packages -->
 
 
 
@@ -33,7 +33,7 @@
 
 
 
-  --> <!-- keep 3 space line so that we do not have to re-work when we add new depend packages -->
+  <!-- keep 3 space line so that we do not have to re-work when we add new depend packages -->
 
 
 
