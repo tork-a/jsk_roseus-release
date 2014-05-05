@@ -1,0 +1,34 @@
+From 1196037753bbee0284a50d23ba3822e2d76fc96a Mon Sep 17 00:00:00 2001
+From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Date: Tue, 6 May 2014 04:10:36 +0900
+Subject: [PATCH] commend in build_depend for rosbuild firm
+
+---
+ package.xml |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/package.xml b/package.xml
+index 03f1741..2f9c9c1 100644
+--- a/package.xml
++++ b/package.xml
+@@ -13,7 +13,7 @@
+   <build_depend>geneus</build_depend>
+ 
+   <!-- this build depends is commented in at jsk_roseus-release -->
+-<!-- comment in this line: keep 3 space line so that we do not have to re-work when we add new depend packages
++<!-- comment in this line: keep 3 space line so that we do not have to re-work when we add new depend packages -->
+ 
+ 
+ 
+@@ -29,7 +29,7 @@
+ 
+ 
+ 
+-  --> <!-- keep 3 space line so that we do not have to re-work when we add new depend packages -->
++  <!-- keep 3 space line so that we do not have to re-work when we add new depend packages -->
+ 
+ 
+ 
+-- 
+1.7.9.5
+
