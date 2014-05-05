@@ -1,4 +1,4 @@
-From af672c7c861a798f8606d76d86ce032cae12c7bb Mon Sep 17 00:00:00 2001
+From 59a61882eed4999b65bf797b93edc153e6540c1d Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 27 Apr 2014 16:21:06 +0900
 Subject: [PATCH] add deb for ros build firm
