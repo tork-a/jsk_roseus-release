@@ -2,6 +2,11 @@
 Changelog for package geneus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.12 (2014-05-06)
+-------------------
+* check if rosbuild_init was called
+* Contributors: Kei Okada
+
 1.1.11 (2014-05-04)
 -------------------
 
