@@ -1,4 +1,4 @@
-From d6bdeb7be9304f31b9d6c49cb6238cff9f4e1314 Mon Sep 17 00:00:00 2001
+From bea51c79382da39b5dc19cfd817534e94ad47a55 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 4 May 2014 05:04:48 +0900
 Subject: [PATCH] remove executive_smach for groovy
