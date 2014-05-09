@@ -2,6 +2,12 @@
 Changelog for package roseus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.14 (2014-05-09)
+-------------------
+* add hasHeader for roscpp >= 1.11.1
+* fix typo in install roseus
+* Contributors: Kei Okada
+
 1.1.13 (2014-05-06)
 -------------------
 * add more message when install roseus
