@@ -2,6 +2,14 @@
 Changelog for package roseus_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.14 (2014-05-09)
+-------------------
+* geneus: add rospack_depends to find dependencies
+* Contributors: Kei Okada
+
+1.1.13 (2014-05-06)
+-------------------
+
 1.1.12 (2014-05-06)
 -------------------
 * add mode packages to depends
