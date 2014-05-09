@@ -2,6 +2,15 @@
 Changelog for package euslisp
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.14 (2014-05-09)
+-------------------
+* Fix long first name of k-okada with traditional japanese person style
+* remove euslisp codes which are arleady migrated to irteus/test and include them in test launch
+* Contributors: Yuto Inagaki, Shunnichi Nozawa
+
+1.1.13 (2014-05-06)
+-------------------
+
 1.1.12 (2014-05-06)
 -------------------
 
