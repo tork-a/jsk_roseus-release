@@ -1,0 +1,29 @@
+From 1ff9e5f80fb1daddf46f48e8da41b4e3f724ec30 Mon Sep 17 00:00:00 2001
+From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Date: Fri, 9 May 2014 13:01:14 +0900
+Subject: [PATCH 3/3] jsk_* it not ready in indigo
+
+---
+ package.xml |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/package.xml b/package.xml
+index 4707ed5..32f1757 100644
+--- a/package.xml
++++ b/package.xml
+@@ -23,9 +23,9 @@
+   <build_depend>nav_msgs</build_depend>
+   <build_depend>dynamic_reconfigure</build_depend>
+   <build_depend>roseus</build_depend>
+-  <build_depend>jsk_common</build_depend>
+-  <build_depend>jsk_recognition</build_depend>
+-  <build_depend>jsk_planning</build_depend>
++  <!-- <build_depend>jsk_common</build_depend> -->
++  <!-- <build_depend>jsk_recognition</build_depend> -->
++  <!-- <build_depend>jsk_planning</build_depend> -->
+ 
+ 
+ 
+-- 
+1.7.9.5
+
