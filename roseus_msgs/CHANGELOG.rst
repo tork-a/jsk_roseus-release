@@ -2,6 +2,10 @@
 Changelog for package roseus_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.16 (2014-05-11)
+-------------------
+* use find_package() to set environment variables
+
 1.1.15 (2014-05-10)
 -------------------
 * compile message even if not catkinized
