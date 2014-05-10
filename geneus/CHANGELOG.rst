@@ -2,6 +2,9 @@
 Changelog for package geneus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.16 (2014-05-11)
+-------------------
+
 1.1.15 (2014-05-10)
 -------------------
 * compile message even if not catkinized
