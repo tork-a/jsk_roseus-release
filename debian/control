@@ -1,0 +1,12 @@
+Source: ros-indigo-roseus
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 7.0.50~), ros-indigo-actionlib, ros-indigo-actionlib-msgs, ros-indigo-angles, ros-indigo-catkin, ros-indigo-euslisp, ros-indigo-geneus, ros-indigo-geometry-msgs, ros-indigo-message-generation, ros-indigo-mk, ros-indigo-rosbash, ros-indigo-rosbuild, ros-indigo-roscpp, ros-indigo-roslang, ros-indigo-rosmsg, ros-indigo-rosnode, ros-indigo-rospack, ros-indigo-rostest, ros-indigo-rostopic, ros-indigo-sensor-msgs, ros-indigo-std-msgs, ros-indigo-std-srvs, ros-indigo-tf, ros-indigo-tf2-ros, ros-indigo-visualization-msgs
+Homepage: http://pr.willowgarage.com/wiki/roseus
+Standards-Version: 3.9.2
+
+Package: ros-indigo-roseus
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-actionlib, ros-indigo-actionlib-msgs, ros-indigo-euslisp, ros-indigo-geneus, ros-indigo-geometry-msgs, ros-indigo-message-runtime, ros-indigo-rosbash, ros-indigo-roscpp, ros-indigo-roslang, ros-indigo-rosmsg, ros-indigo-rosnode, ros-indigo-rospack, ros-indigo-rostest, ros-indigo-sensor-msgs, ros-indigo-std-msgs, ros-indigo-std-srvs, ros-indigo-tf, ros-indigo-tf2-ros, ros-indigo-visualization-msgs
+Description: EusLisp client for ROs Robot Operating System.
