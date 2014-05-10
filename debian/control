@@ -1,0 +1,12 @@
+Source: ros-hydro-jsk-roseus
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 7.0.50~), ros-hydro-catkin
+Homepage: http://ros.org/wiki/jsk_roseus
+Standards-Version: 3.9.2
+
+Package: ros-hydro-jsk-roseus
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-hydro-euslisp, ros-hydro-geneus, ros-hydro-roseus
+Description: Metapackage that contains roseus package for jsk-ros-pkg
