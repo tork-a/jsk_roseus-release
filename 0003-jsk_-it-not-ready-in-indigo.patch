@@ -1,4 +1,4 @@
-From 631ec85d972e45765cf86b029c695fd4d57b09e1 Mon Sep 17 00:00:00 2001
+From d96b673fc4695988c9adf7d978d19f92fbc907af Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Fri, 9 May 2014 13:01:14 +0900
 Subject: [PATCH 3/3] jsk_* it not ready in indigo
@@ -8,7 +8,7 @@ Subject: [PATCH 3/3] jsk_* it not ready in indigo
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/package.xml b/package.xml
-index da57b8e..269dbdc 100644
+index 45d2ca7..7fc51e7 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -23,9 +23,9 @@
