@@ -1,25 +1,27 @@
-From 44c417bcb836e7daae2ebd79530a27a82ef423d7 Mon Sep 17 00:00:00 2001
+From d153562bed2c0ed70eb57696d310fa7a881fca34 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
-Date: Fri, 9 May 2014 13:01:14 +0900
-Subject: [PATCH 3/3] jsk_* it not ready in indigo
+Date: Sun, 11 May 2014 17:00:18 +0900
+Subject: [PATCH 3/4] jsk_* it not ready in indigo
 
 ---
- package.xml |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ package.xml |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/package.xml b/package.xml
-index 865a084..44678ac 100644
+index f43fca9..33b1b8f 100644
 --- a/package.xml
 +++ b/package.xml
-@@ -23,9 +23,9 @@
-   <build_depend>nav_msgs</build_depend>
-   <build_depend>dynamic_reconfigure</build_depend>
-   <build_depend>roseus</build_depend>
+@@ -26,10 +26,10 @@
+   <build_depend>pr2eus</build_depend>
+   <build_depend>cmake_modules</build_depend>
+   <build_depend>rtmros_common</build_depend>
 -  <build_depend>jsk_common</build_depend>
 -  <build_depend>jsk_recognition</build_depend>
+-  <build_depend>jsk_model_tools</build_depend>
 -  <build_depend>jsk_planning</build_depend>
 +  <!-- <build_depend>jsk_common</build_depend> -->
 +  <!-- <build_depend>jsk_recognition</build_depend> -->
++  <!-- <build_depend>jsk_model_tools</build_depend> -->
 +  <!-- <build_depend>jsk_planning</build_depend> -->
  
  
