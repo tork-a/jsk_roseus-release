@@ -26,10 +26,10 @@
   <build_depend>pr2eus</build_depend>
   <build_depend>cmake_modules</build_depend>
   <build_depend>rtmros_common</build_depend>
-  <build_depend>jsk_common</build_depend>
-  <build_depend>jsk_recognition</build_depend>
-  <build_depend>jsk_model_tools</build_depend>
-  <build_depend>jsk_planning</build_depend>
+  <!-- <build_depend>jsk_common</build_depend> -->
+  <!-- <build_depend>jsk_recognition</build_depend> -->
+  <!-- <build_depend>jsk_model_tools</build_depend> -->
+  <!-- <build_depend>jsk_planning</build_depend> -->
 
 
 
