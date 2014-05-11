@@ -1,0 +1,23 @@
+From db4f6db88f8456ff7a27b896e3aa062d29c80f58 Mon Sep 17 00:00:00 2001
+From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Date: Sun, 11 May 2014 16:28:37 +0900
+Subject: [PATCH] add roseus-msgs to Depends
+
+---
+ debian/control.em |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/debian/control.em b/debian/control.em
+index 35e0893..3d7e437 100644
+--- a/debian/control.em
++++ b/debian/control.em
+@@ -8,5 +8,5 @@ Standards-Version: 3.9.2
+ 
+ Package: @(Package)
+ Architecture: any
+-Depends: ${shlibs:Depends}, ${misc:Depends}, @(', '.join(Depends))
++Depends: ${shlibs:Depends}, ${misc:Depends}, @(', '.join(Depends)), ros-indigo-roseus-msgs
+ Description: @(Description)
+-- 
+1.7.9.5
+
