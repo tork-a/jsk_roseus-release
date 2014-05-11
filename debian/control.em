@@ -8,5 +8,5 @@ Standards-Version: 3.9.2
 
 Package: @(Package)
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, @(', '.join(Depends))
+Depends: ${shlibs:Depends}, ${misc:Depends}, @(', '.join(Depends)), ros-hydro-roseus-msgs
 Description: @(Description)
