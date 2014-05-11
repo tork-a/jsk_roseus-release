@@ -2,6 +2,26 @@
 Changelog for package roseus_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.17 (2014-05-11)
+-------------------
+* Merge pull request #104 from k-okada/add_more_packages
+  add more package to generate messages
+* add more package to generate messages
+
+1.1.16 (2014-05-11)
+-------------------
+* use find_package() to set environment variables
+
+1.1.15 (2014-05-10)
+-------------------
+* compile message even if not catkinized
+* Contributors: Kei Okada
+
+1.1.14 (2014-05-09)
+-------------------
+* geneus: add rospack_depends to find dependencies
+* Contributors: Kei Okada
+
 1.1.13 (2014-05-06)
 -------------------
 
