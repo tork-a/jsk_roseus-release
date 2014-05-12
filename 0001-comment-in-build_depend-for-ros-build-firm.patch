@@ -1,4 +1,4 @@
-From 9b132f47663ee56745181bddc6feba59e8918330 Mon Sep 17 00:00:00 2001
+From af8cad108d74539c9e87f71dabc7b13dac971c3a Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Tue, 6 May 2014 04:41:01 +0900
 Subject: [PATCH 1/4] comment in build_depend for ros build firm

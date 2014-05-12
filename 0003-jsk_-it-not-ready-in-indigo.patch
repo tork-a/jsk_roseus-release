@@ -1,4 +1,4 @@
-From d153562bed2c0ed70eb57696d310fa7a881fca34 Mon Sep 17 00:00:00 2001
+From 32d8bbcda353b192f91a7f71b6828187d3d9d5a6 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 11 May 2014 17:00:18 +0900
 Subject: [PATCH 3/4] jsk_* it not ready in indigo
