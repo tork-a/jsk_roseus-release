@@ -1,0 +1,23 @@
+From 06f24531de5cd9c5536d070bf2a21af73f5a0c9d Mon Sep 17 00:00:00 2001
+From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Date: Mon, 12 May 2014 23:11:30 +0900
+Subject: [PATCH 2/2] disable to install ros-hydro-roseus-msgs
+
+---
+ debian/control.em |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/debian/control.em b/debian/control.em
+index 67afa9e..35e0893 100644
+--- a/debian/control.em
++++ b/debian/control.em
+@@ -8,5 +8,5 @@ Standards-Version: 3.9.2
+ 
+ Package: @(Package)
+ Architecture: any
+-Depends: ${shlibs:Depends}, ${misc:Depends}, @(', '.join(Depends)), ros-hydro-roseus-msgs
++Depends: ${shlibs:Depends}, ${misc:Depends}, @(', '.join(Depends))
+ Description: @(Description)
+-- 
+1.7.9.5
+
