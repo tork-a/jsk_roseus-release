@@ -1,4 +1,4 @@
-From 5d2fb5e32f6b1c8dd213fcf764da6296c9510139 Mon Sep 17 00:00:00 2001
+From 4df863d08698e02eb65a4b88536e36ad25da338a Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Tue, 6 May 2014 04:10:36 +0900
 Subject: [PATCH] commend in build_depend for rosbuild firm
@@ -8,7 +8,7 @@ Subject: [PATCH] commend in build_depend for rosbuild firm
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/package.xml b/package.xml
-index 7ea146f..65c2637 100644
+index 76d622a..9eceb7b 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -13,7 +13,7 @@
@@ -20,7 +20,7 @@ index 7ea146f..65c2637 100644
  
  
  
-@@ -29,7 +29,7 @@
+@@ -33,7 +33,7 @@
  
  
  
