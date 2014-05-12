@@ -1,7 +1,7 @@
-From f2b4e1cd821387c38c9507c01e3bafa5e57a8ea7 Mon Sep 17 00:00:00 2001
+From ba5da3565695e8b34ed3dbefa5262dca844a23de Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 11 May 2014 16:28:37 +0900
-Subject: [PATCH] add roseus-msgs to Depends
+Subject: [PATCH 1/2] add roseus-msgs to Depends
 
 ---
  debian/control.em |    2 +-
