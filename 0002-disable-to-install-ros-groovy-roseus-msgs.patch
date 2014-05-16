@@ -1,4 +1,4 @@
-From c4635491c0f03a9bd87d0ba71a3f5c5b8ba4f439 Mon Sep 17 00:00:00 2001
+From 096db17c3e6ff6c31ffa135d1205be36fe6af72f Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Mon, 12 May 2014 23:11:10 +0900
 Subject: [PATCH 2/2] disable to install ros-groovy-roseus-msgs
