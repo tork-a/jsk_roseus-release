@@ -1,4 +1,4 @@
-From b4004893a126bec9e28030bd5f39d6af5667941b Mon Sep 17 00:00:00 2001
+From cb9d47efd912a8566c3cbc5be71fef250e712a37 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 11 May 2014 17:04:39 +0900
 Subject: [PATCH 4/4] comment out rtmros_common for indigo
