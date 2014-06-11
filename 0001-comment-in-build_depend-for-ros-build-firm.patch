@@ -1,4 +1,4 @@
-From 0b9c786c2bc549ae7813e26a04eb1df087cc05bc Mon Sep 17 00:00:00 2001
+From 98a09b64e10e01938a3ebf5fa87aaded6a285a3c Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Tue, 6 May 2014 04:30:13 +0900
 Subject: [PATCH] comment in build_depend for ros build firm
@@ -8,7 +8,7 @@ Subject: [PATCH] comment in build_depend for ros build firm
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/package.xml b/package.xml
-index 76d622a..0260f17 100644
+index 0756ddc..acbb3f5 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -13,7 +13,7 @@
