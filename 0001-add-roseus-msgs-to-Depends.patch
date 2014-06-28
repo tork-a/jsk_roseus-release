@@ -1,4 +1,4 @@
-From f7a999b7018c684c33b9475e50ed41da5ce70021 Mon Sep 17 00:00:00 2001
+From 3af5b0ac33a5998d491c1edd43194b455f1ba449 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 11 May 2014 16:28:17 +0900
 Subject: [PATCH 1/2] add roseus-msgs to Depends
@@ -8,7 +8,7 @@ Subject: [PATCH 1/2] add roseus-msgs to Depends
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/debian/control.em b/debian/control.em
-index 35e0893..67afa9e 100644
+index 8b9cd67..a6b5157 100644
 --- a/debian/control.em
 +++ b/debian/control.em
 @@ -8,5 +8,5 @@ Standards-Version: 3.9.2

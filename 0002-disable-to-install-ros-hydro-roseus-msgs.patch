@@ -1,4 +1,4 @@
-From 8ba09ec0dfa3448c1782ab53d2f9e7987b0f73e7 Mon Sep 17 00:00:00 2001
+From 9fdf882a53a0fe73730ae80e3375243bcaae8471 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Mon, 12 May 2014 23:11:30 +0900
 Subject: [PATCH 2/2] disable to install ros-hydro-roseus-msgs
@@ -8,7 +8,7 @@ Subject: [PATCH 2/2] disable to install ros-hydro-roseus-msgs
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/debian/control.em b/debian/control.em
-index 67afa9e..35e0893 100644
+index a6b5157..8b9cd67 100644
 --- a/debian/control.em
 +++ b/debian/control.em
 @@ -8,5 +8,5 @@ Standards-Version: 3.9.2
