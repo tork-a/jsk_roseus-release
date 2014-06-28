@@ -1,3 +1,28 @@
+## jsk_roseus (groovy) - 1.1.20-0
+
+The packages in the `jsk_roseus` repository were released into the `groovy` distro by running `/var/lib/jenkins/send_to_bloom.py jsk-ros-pkg jsk_roseus` on `Sat, 28 Jun 2014 19:21:55 -0000`
+
+These packages were released:
+- `euslisp`
+- `geneus`
+- `jsk_roseus`
+- `roseus`
+- `roseus_msgs`
+- `roseus_smach`
+
+Version of package(s) in repository `jsk_roseus`:
+- rosdistro version: `1.1.19-0`
+- old version: `1.1.19-0`
+- new version: `1.1.20-0`
+
+Versions of tools used:
+- bloom version: `0.5.9`
+- catkin_pkg version: `0.2.2`
+- rosdep version: `0.10.27`
+- rosdistro version: `0.3.5`
+- vcstools version: `0.1.33`
+
+
 ## jsk_roseus (indigo) - 1.1.19-0
 
 The packages in the `jsk_roseus` repository were released into the `indigo` distro by running `/var/lib/jenkins/send_to_bloom.py jsk-ros-pkg jsk_roseus` on `Wed, 11 Jun 2014 05:29:59 -0000`
