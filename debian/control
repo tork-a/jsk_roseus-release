@@ -1,0 +1,12 @@
+Source: ros-groovy-roseus-msgs
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-groovy-catkin, ros-groovy-cmake-modules, ros-groovy-control-msgs, ros-groovy-dynamic-reconfigure, ros-groovy-geneus, ros-groovy-jsk-common, ros-groovy-jsk-model-tools, ros-groovy-jsk-planning, ros-groovy-jsk-recognition, ros-groovy-moveit-full-pr2, ros-groovy-nav-msgs, ros-groovy-pr2eus, ros-groovy-roseus, ros-groovy-rtmros-common, ros-groovy-rviz
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-groovy-roseus-msgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-groovy-geneus
+Description: Special package that generates roseus msgs for all installed packages
