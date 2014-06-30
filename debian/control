@@ -1,0 +1,12 @@
+Source: ros-groovy-geneus
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 7.0.0), ros-groovy-catkin, ros-groovy-euslisp, ros-groovy-genmsg, ros-groovy-rospy
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-groovy-geneus
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-groovy-euslisp, ros-groovy-genmsg, ros-groovy-rospy
+Description: EusLisp ROS message and service generators
