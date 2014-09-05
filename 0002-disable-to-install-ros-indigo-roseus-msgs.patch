@@ -1,4 +1,4 @@
-From 077de4e1d87bc927da9c72c9fe6d7520091094e5 Mon Sep 17 00:00:00 2001
+From 518662d37cbe7f6f7ae9df4f014c6ccbd4fc6240 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Mon, 12 May 2014 23:11:50 +0900
 Subject: [PATCH 2/2] disable to install ros-indigo-roseus-msgs
