@@ -1,4 +1,4 @@
-From 7bec3df5d71ed6e4dd1f5457e1798437b4e1f22b Mon Sep 17 00:00:00 2001
+From 3a0a81f1356cde0729cb3901f1bb585e7cc57e0b Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 4 May 2014 05:04:48 +0900
 Subject: [PATCH] remove executive_smach for groovy
@@ -8,7 +8,7 @@ Subject: [PATCH] remove executive_smach for groovy
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/package.xml b/package.xml
-index dd0dfa8..0999104 100644
+index 97f4348..5a8f2c9 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -21,11 +21,11 @@
