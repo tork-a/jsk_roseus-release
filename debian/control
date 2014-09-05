@@ -1,0 +1,12 @@
+Source: ros-hydro-roseus-msgs
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-hydro-audio-common, ros-hydro-catkin, ros-hydro-cmake-modules, ros-hydro-control-msgs, ros-hydro-dynamic-reconfigure, ros-hydro-geneus, ros-hydro-jsk-common, ros-hydro-jsk-model-tools, ros-hydro-jsk-planning, ros-hydro-jsk-recognition, ros-hydro-move-base-msgs, ros-hydro-moveit-full-pr2, ros-hydro-nav-msgs, ros-hydro-pr2-description, ros-hydro-pr2-gazebo, ros-hydro-pr2-msgs, ros-hydro-pr2eus, ros-hydro-roseus, ros-hydro-rtmros-common, ros-hydro-rviz
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-hydro-roseus-msgs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-hydro-geneus
+Description: Special package that generates roseus msgs for all installed packages
