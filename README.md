@@ -1,3 +1,30 @@
+## jsk_roseus (hydro) - 1.1.24-0
+
+The packages in the `jsk_roseus` repository were released into the `hydro` distro by running `/usr/bin/bloom-release jsk_roseus --rosdistro hydro --track hydro` on `Wed, 24 Sep 2014 11:30:36 -0000`
+
+These packages were released:
+- `euslisp`
+- `geneus`
+- `jsk_roseus`
+- `roseus`
+- `roseus_msgs`
+- `roseus_smach`
+
+Version of package(s) in repository `jsk_roseus`:
+- upstream repository: https://github.com/jsk-ros-pkg/jsk_roseus
+- release repository: https://github.com/tork-a/jsk_roseus-release.git
+- rosdistro version: `1.1.22-0`
+- old version: `1.1.22-0`
+- new version: `1.1.24-0`
+
+Versions of tools used:
+- bloom version: `0.5.11`
+- catkin_pkg version: `0.2.4`
+- rosdep version: `0.10.30`
+- rosdistro version: `0.3.5`
+- vcstools version: `0.1.35`
+
+
 ## jsk_roseus (indigo) - 1.1.22-0
 
 The packages in the `jsk_roseus` repository were released into the `indigo` distro by running `/usr/bin/bloom-release --track indigo --rosdistro indigo jsk_roseus` on `Fri, 05 Sep 2014 04:36:36 -0000`
