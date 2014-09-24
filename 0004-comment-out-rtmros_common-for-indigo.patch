@@ -1,4 +1,4 @@
-From ca7d8d29b53c3cea51bbb770c3f0fd63370747ff Mon Sep 17 00:00:00 2001
+From 47f9bd3166e2a8485137762e5d2609a3cf1da303 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 11 May 2014 17:04:39 +0900
 Subject: [PATCH 4/4] comment out rtmros_common for indigo
@@ -8,7 +8,7 @@ Subject: [PATCH 4/4] comment out rtmros_common for indigo
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/package.xml b/package.xml
-index d73deb9..17fd364 100644
+index aa60b79..062de7d 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -25,7 +25,7 @@

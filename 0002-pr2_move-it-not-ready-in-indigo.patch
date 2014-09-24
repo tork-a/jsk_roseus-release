@@ -1,4 +1,4 @@
-From 6a19949023c23b8e80f3f56fbac13f9d46dc5565 Mon Sep 17 00:00:00 2001
+From f670cade6550c4c5053df987372209f79fb2ca0d Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Fri, 9 May 2014 12:58:24 +0900
 Subject: [PATCH 2/4] pr2_move it not ready in indigo
@@ -8,7 +8,7 @@ Subject: [PATCH 2/4] pr2_move it not ready in indigo
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/package.xml b/package.xml
-index 5ef0a47..2448e23 100644
+index c910c40..9861a26 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -18,7 +18,7 @@
