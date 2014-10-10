@@ -1,4 +1,4 @@
-From 54262b24f968a80a8818f2a6b4bfb19dc74d75d9 Mon Sep 17 00:00:00 2001
+From d812be210589a139840536e5f679cdd86905c32b Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Mon, 12 May 2014 23:11:30 +0900
 Subject: [PATCH 2/2] disable to install ros-hydro-roseus-msgs
