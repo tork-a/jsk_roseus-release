@@ -1,17 +1,17 @@
-From 5749620dea91c486799341466b85f760e573ea84 Mon Sep 17 00:00:00 2001
+From 9de12cd6dca22bc844b34b2654fbddf7143cee95 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 11 May 2014 17:00:18 +0900
 Subject: [PATCH 3/4] jsk_* it not ready in indigo
 
 ---
- package.xml |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ package.xml |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/package.xml b/package.xml
-index e3e4bb5..b8c376e 100644
+index 47c4131..34f26d8 100644
 --- a/package.xml
 +++ b/package.xml
-@@ -26,10 +26,10 @@
+@@ -26,14 +26,14 @@
    <build_depend>pr2eus</build_depend>
    <build_depend>cmake_modules</build_depend>
    <build_depend>rtmros_common</build_depend>
@@ -19,10 +19,18 @@ index e3e4bb5..b8c376e 100644
 -  <build_depend>jsk_recognition</build_depend>
 -  <build_depend>jsk_model_tools</build_depend>
 -  <build_depend>jsk_planning</build_depend>
+-  <build_depend>jsk_rviz_plugins</build_depend>
+-  <build_depend>jsk_rqt_plugins</build_depend>
+-  <build_depend>jsk_interactive</build_depend>
+-  <build_depend>jsk_interactive_marker</build_depend>
 +  <!-- <build_depend>jsk_common</build_depend> -->
 +  <!-- <build_depend>jsk_recognition</build_depend> -->
 +  <!-- <build_depend>jsk_model_tools</build_depend> -->
 +  <!-- <build_depend>jsk_planning</build_depend> -->
++  <!-- <build_depend>jsk_rviz_plugins</build_depend> -->
++  <!-- <build_depend>jsk_rqt_plugins</build_depend> -->
++  <!-- <build_depend>jsk_interactive</build_depend> -->
++  <!-- <build_depend>jsk_interactive_marker</build_depend> -->
  
  
  
