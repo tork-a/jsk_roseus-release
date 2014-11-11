@@ -2,6 +2,17 @@
 Changelog for package roseus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.26 (2014-11-10)
+-------------------
+* Add utility function to set dynamic_reconfigure parameter
+* Contributors: Ryohei Ueda
+
+1.1.25 (2014-10-10)
+-------------------
+
+1.1.23 (2014-09-24)
+-------------------
+
 1.1.22 (2014-09-04)
 -------------------
 * install roseus to global bin, fixed #146
