@@ -239,8 +239,8 @@
                                ((:color col) (float-vector 1 1 1))
 			       ((:alpha a) 1.0)
                                ((:id idx) 0) ns lifetime)
-  (send obj :worldcoords) ;; make sure to update vertices
   (let ((bodies (if (find-method obj :bodies) (send obj :bodies) (list obj))))
+    (send-all bodies :worldcoords) ;; make sure to update vertices
     (let* ((msg (instance visualization_msgs::Marker :init
 			  :type visualization_msgs::Marker::*TRIANGLE_LIST*
 			  :header header
@@ -427,7 +427,7 @@
 	  (unless sc
 	    (setq sc (float-vector 100.0 100.0 0))))
       (progn
-	(send msg :pose ros::coords->pose arg)
+	(send msg :pose (ros::coords->tf-pose arg))
 	(unless sc
 	  (setq sc (float-vector 1000.0 100.0 100.0)))))
     (send msg :scale (ros::pos->tf-translation sc))
