@@ -1,14 +1,14 @@
-From 027ff02a28b43b7061240658a234bd24172d4792 Mon Sep 17 00:00:00 2001
+From 1c961ee57fa8f0a7216d708df53ae7b95267c205 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Fri, 9 May 2014 12:58:24 +0900
 Subject: [PATCH 2/4] pr2_move it not ready in indigo
 
 ---
- package.xml |    2 +-
+ package.xml | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/package.xml b/package.xml
-index f41001d..47c4131 100644
+index 9b5114d..275c522 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -18,7 +18,7 @@
@@ -21,5 +21,5 @@ index f41001d..47c4131 100644
    <build_depend>nav_msgs</build_depend>
    <build_depend>dynamic_reconfigure</build_depend>
 -- 
-1.7.9.5
+1.9.1
 
