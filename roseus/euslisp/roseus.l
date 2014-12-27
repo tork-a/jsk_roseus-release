@@ -37,19 +37,23 @@
   (defun user::y-or-n-p (&rest args) t))
 
 (defun ros::roseus (name &key
-                    (option (list ros::*anonymous-name*))
+                    (anonymous t)
+                    (logger "ros.roseus")
+                    (level ros::*rosinfo*)
                     (args lisp::*eustop-argument*))
   ;; (pprint (list 'roseus_args args))
-  (prog1
-    (ros::roseus-raw name (apply #'logior option) args)
-    (dotimes (i (length lisp::*eustop-argument*))
-      (when (and
-             (not (substringp "warning-message" (elt lisp::*eustop-argument* i)))
-             (substringp ":=" (elt lisp::*eustop-argument* i)))
-        (setf (elt lisp::*eustop-argument* i)
-              (format nil "(warning-message 1 \"ignore ~a~%\")"
-                      (elt lisp::*eustop-argument* i)))))
-    ))
+  (let ((option (if anonymous (list ros::*anonymous-name*) (list))))
+    (prog1
+        (ros::roseus-raw name (apply #'logior option) args)
+      (dotimes (i (length lisp::*eustop-argument*))
+        (when (and
+               (not (substringp "warning-message" (elt lisp::*eustop-argument* i)))
+               (substringp ":=" (elt lisp::*eustop-argument* i)))
+          (setf (elt lisp::*eustop-argument* i)
+                (format nil "(warning-message 1 \"ignore ~a~%\")"
+                        (elt lisp::*eustop-argument* i)))))
+      (ros::set-logger-level logger level)
+      )))
 
 (setq ros::*compile-message* nil)
 
@@ -113,6 +117,17 @@
     (instance ros::time :init :sec csec :nsec cnsec)))
 (defun ros::time= (a b)
   (equal (a . sec-nsec) (b . sec-nsec)))
+(defun ros::time> (a b)
+  (let ((t-dif (coerce (send (ros::time- a b) :sec-nsec) cons)))
+    (or (> (car t-dif) 0) (and (= (car t-dif) 0) (> (cadr t-dif) 0)))))
+(defun ros::time>= (a b)
+  (or (ros::time= a b) (ros::time> a b)))
+(defun ros::time< (a b)
+  (not (ros::time>= a b)))
+(defun ros::time<= (a b)
+  (not (ros::time> a b)))
+
+
 
 (defun ros::ros-home-dir ()
   (let ((ros-home (unix::getenv "ROS_HOME"))
