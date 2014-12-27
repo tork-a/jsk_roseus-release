@@ -2,6 +2,17 @@
 Changelog for package roseus_smach
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.29 (2014-12-27)
+-------------------
+
+1.1.28 (2014-12-26)
+-------------------
+
+1.1.27 (2014-12-20)
+-------------------
+* remove cmake file for rosbuild
+* not use executive_smach as deps directly; remove manifest.xml
+
 1.1.26 (2014-11-10)
 -------------------
 
@@ -127,4 +138,4 @@ Changelog for package roseus_smach
 * commit current source tree
 * add code for smach_viewer
 * change name smach_roseus -> roseus_smach
-* Contributors: Kei Okada, chen, manabu, youhei
+* Contributors: chen, Kei Okada, youhei, manabu
