@@ -1,4 +1,4 @@
-From 91cbf952de415c9b4ba3651a25027213b9eb6e7b Mon Sep 17 00:00:00 2001
+From 549a86c4b2a0ef5a66cc1cbda59b4b502989d2af Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Mon, 12 May 2014 23:11:50 +0900
 Subject: [PATCH 2/2] disable to install ros-indigo-roseus-msgs
@@ -8,10 +8,10 @@ Subject: [PATCH 2/2] disable to install ros-indigo-roseus-msgs
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/debian/control.em b/debian/control.em
-index 6ca9492..8b9cd67 100644
+index c6cf197..175af20 100644
 --- a/debian/control.em
 +++ b/debian/control.em
-@@ -8,5 +8,5 @@ Standards-Version: 3.9.2
+@@ -10,5 +10,5 @@ Standards-Version: 3.9.2
  
  Package: @(Package)
  Architecture: any
