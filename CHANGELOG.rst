@@ -2,6 +2,10 @@
 Changelog for package roseus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.1 (2015-01-27)
+------------------
+* install generated messages
+
 1.2.0 (2015-01-26)
 ------------------
 * [roseus] If user return invalid instance in service callback, print error message
