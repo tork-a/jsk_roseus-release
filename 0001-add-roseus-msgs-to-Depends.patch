@@ -1,10 +1,10 @@
-From 0f1bb5ac951fdb6d2fced011f97d6235e4ca6431 Mon Sep 17 00:00:00 2001
+From e70c99fbb0576b090b5b461117d1c4a3bb78b717 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 11 May 2014 16:28:17 +0900
 Subject: [PATCH 1/2] add roseus-msgs to Depends
 
 ---
- debian/control.em |    2 +-
+ debian/control.em | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/debian/control.em b/debian/control.em
@@ -19,5 +19,5 @@ index 8b9cd67..a6b5157 100644
 +Depends: ${shlibs:Depends}, ${misc:Depends}, @(', '.join(Depends)), ros-hydro-roseus-msgs
  Description: @(Description)
 -- 
-1.7.9.5
+1.9.1
 
