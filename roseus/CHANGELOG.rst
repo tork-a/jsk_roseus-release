@@ -2,6 +2,16 @@
 Changelog for package roseus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2015-01-26)
+------------------
+* [roseus] If user return invalid instance in service callback, print error message
+* use EUSDIR insted of using rospack find euslisp
+* Contributors: Kei Okada, Ryohei Ueda
+
+1.1.33 (2015-01-26)
+-------------------
+* fix wrong all_generate_message_eus target
+
 1.1.32 (2015-01-26)
 -------------------
 * generate all roseus messages on buildfirm
