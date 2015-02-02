@@ -2,7 +2,7 @@
 
 set -x
 
-if [ $ROS_DISTRO == "indigo" -a "$TRAVIS_JOB_ID" ]; then
+if [ "$ROS_DISTRO" == "indigo" -a "$TRAVIS_JOB_ID" ]; then
     sudo apt-get install -qq -y python-jenkins
     ./.travis/travis_jenkins.py
     exit $?
@@ -15,12 +15,17 @@ function error {
     exit 1
 }
 
-[ $BUILDER == rosbuild ] && ( echo "$BUILDER is no longer supported"; exit 1; )
-[ $ROSWS == rosws ] && ( echo "$ROSWS is no longer supported"; exit 1; )
+[ "$BUILDER" == rosbuild ] && ( echo "$BUILDER is no longer supported"; exit 1; )
+[ "$ROSWS" == rosws ] && ( echo "$ROSWS is no longer supported"; exit 1; )
 
 trap error ERR
 
 ### before_install: # Use this to prepare the system to install prerequisites or dependencies
+## to avoid stty error, until catkin_tools 2.0.x (http://stackoverflow.com/questions/27969057/cant-launch-catkin-build-from-jenkins-job)
+sudo apt-get install -qq -y python-setuptools
+[ ! -e /tmp/catkin_tools ] && (cd /tmp/; git clone https://github.com/catkin/catkin_tools)
+(cd /tmp/catkin_tools; sudo python setup.py install)
+
 # Define some config vars
 export CI_SOURCE_PATH=$(pwd)
 export REPOSITORY_NAME=${PWD##*/}
@@ -30,7 +35,7 @@ sudo sh -c 'echo "deb http://packages.ros.org/ros-shadow-fixed/ubuntu `lsb_relea
 wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
 lsb_release -a
 sudo apt-get update
-sudo apt-get install -y python-rosdep python-wstool python-catkin-tools ros-$ROS_DISTRO-rosbash
+sudo apt-get install -y -qq python-rosdep python-wstool python-catkin-tools ros-$ROS_DISTRO-rosbash
 if [ "$EXTRA_DEB" ]; then sudo apt-get install -qq -y $EXTRA_DEB;  fi
 # MongoDB hack - I don't fully understand this but its for moveit_warehouse
 dpkg -s mongodb || echo "ok"; export HAVE_MONGO_DB=$?
@@ -64,11 +69,12 @@ source /opt/ros/$ROS_DISTRO/setup.bash # re-source setup.bash for setting enviro
 
 ### script: # All commands must exit with code 0 on success. Anything else is considered failure.
 # for catkin
-if [ "$BUILDER" == catkin ]; then catkin build --make-args $ROS_PARALLEL_JOBS            ; fi
-if [ "$BUILDER" == catkin ]; then catkin run_tests  ; fi
+if [ "$BUILDER" == catkin ]; then catkin build -i -v --no-status $BUILD_PKGS --make-args $ROS_PARALLEL_JOBS            ; fi
+if [ "$BUILDER" == catkin ]; then catkin run_tests $BUILD_PKGS ; fi
 if [ "$BUILDER" == catkin ]; then find build -name LastTest.log -exec echo "==== {} ====" \; -exec cat {} \;  ; fi
-if [ "$BUILDER" == catkin ]; then catkin clean -a                        ; fi
+# if [ "$BUILDER" == catkin ]; then catkin clean -a                        ; fi
+if [ "$BUILDER" == catkin ]; then catkin clean -b                        ; fi
 if [ "$BUILDER" == catkin ]; then catkin config --install                ; fi
-if [ "$BUILDER" == catkin ]; then catkin build --make-args $ROS_PARALLEL_JOBS            ; fi
+if [ "$BUILDER" == catkin ]; then catkin build -i -v --no-status $BUILD_PKGS --make-args $ROS_PARALLEL_JOBS            ; fi
 if [ "$BUILDER" == catkin ]; then source install/setup.bash              ; fi
 if [ "$BUILDER" == catkin ]; then export EXIT_STATUS=0; for pkg in $TARGET_PKG; do [ "`find install/share/$pkg -iname '*.test'`" == "" ] && echo "[$pkg] No tests ware found!!!"  || find install/share/$pkg -iname "*.test" -print0 | xargs -0 -n1 rostest || export EXIT_STATUS=$?; done; [ $EXIT_STATUS == 0 ] ; fi
