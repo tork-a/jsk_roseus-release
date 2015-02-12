@@ -3,7 +3,8 @@
 set -x
 
 if [ "$ROS_DISTRO" == "indigo" -a "$TRAVIS_JOB_ID" ]; then
-    sudo apt-get install -qq -y python-jenkins
+    sudo apt-get install -y -qq python-pip
+    sudo pip install python-jenkins
     ./.travis/travis_jenkins.py
     exit $?
 fi
@@ -23,8 +24,8 @@ trap error ERR
 ### before_install: # Use this to prepare the system to install prerequisites or dependencies
 ## to avoid stty error, until catkin_tools 2.0.x (http://stackoverflow.com/questions/27969057/cant-launch-catkin-build-from-jenkins-job)
 sudo apt-get install -qq -y python-setuptools
-[ ! -e /tmp/catkin_tools ] && (cd /tmp/; git clone https://github.com/catkin/catkin_tools)
-(cd /tmp/catkin_tools; sudo python setup.py install)
+[ ! -e /tmp/catkin_tools ] && (cd /tmp/; git clone -q https://github.com/catkin/catkin_tools)
+(cd /tmp/catkin_tools; sudo python setup.py --quiet install)
 
 # Define some config vars
 export CI_SOURCE_PATH=$(pwd)
@@ -43,7 +44,8 @@ if [ $HAVE_MONGO_DB == 0 ]; then sudo apt-get remove -qq -y mongodb mongodb-10ge
 if [ $HAVE_MONGO_DB == 0 ]; then sudo apt-get install -qq -y mongodb-clients mongodb-server -o Dpkg::Options::="--force-confdef" || echo "ok"; fi # default actions
 # Setup rosdep
 sudo rosdep init
-rosdep update; while [ $? != 0 ]; do sleep 1; rosdep update; done
+ret=1
+rosdep update || while [ $ret != 0 ]; do sleep 1; rosdep update && ret=0 || echo "failed"; done
 
 ### install: # Use this to install any prerequisites or dependencies necessary to run your build
 # Create workspace
@@ -61,7 +63,11 @@ if [ "$ROSDEP_UPDATE_QUIET" == "true" ]; then
     ROSDEP_ARGS=>/dev/null
 fi
 source /opt/ros/$ROS_DISTRO/setup.bash # ROS_PACKAGE_PATH is important for rosdep
-${CI_SOURCE_PATH}/.travis/rosdep-install.sh
+if [ -e ${CI_SOURCE_PATH}/.travis/rosdep-install.sh]; then ## this is mainly for jsk_travis itself
+    ${CI_SOURCE_PATH}/.travis/rosdep-install.sh
+else
+    wget http://raw.github.com/jsk-ros-pkg/jsk_travis/master/rosdep-install.sh -O - | bash
+fi
 
 
 ### before_script: # Use this to prepare your build for testing e.g. copy database configurations, environment variables, etc.
@@ -72,9 +78,10 @@ source /opt/ros/$ROS_DISTRO/setup.bash # re-source setup.bash for setting enviro
 if [ "$BUILDER" == catkin ]; then catkin build -i -v --no-status $BUILD_PKGS --make-args $ROS_PARALLEL_JOBS            ; fi
 if [ "$BUILDER" == catkin ]; then catkin run_tests $BUILD_PKGS ; fi
 if [ "$BUILDER" == catkin ]; then find build -name LastTest.log -exec echo "==== {} ====" \; -exec cat {} \;  ; fi
-# if [ "$BUILDER" == catkin ]; then catkin clean -a                        ; fi
-if [ "$BUILDER" == catkin ]; then catkin clean -b                        ; fi
-if [ "$BUILDER" == catkin ]; then catkin config --install                ; fi
-if [ "$BUILDER" == catkin ]; then catkin build -i -v --no-status $BUILD_PKGS --make-args $ROS_PARALLEL_JOBS            ; fi
-if [ "$BUILDER" == catkin ]; then source install/setup.bash              ; fi
-if [ "$BUILDER" == catkin ]; then export EXIT_STATUS=0; for pkg in $TARGET_PKG; do [ "`find install/share/$pkg -iname '*.test'`" == "" ] && echo "[$pkg] No tests ware found!!!"  || find install/share/$pkg -iname "*.test" -print0 | xargs -0 -n1 rostest || export EXIT_STATUS=$?; done; [ $EXIT_STATUS == 0 ] ; fi
+if [ "$NOT_TEST_INSTALL" != "true" ]; then
+    if [ "$BUILDER" == catkin ]; then catkin clean -a                        ; fi
+    if [ "$BUILDER" == catkin ]; then catkin config --install                ; fi
+    if [ "$BUILDER" == catkin ]; then catkin build -i -v --no-status $BUILD_PKGS --make-args $ROS_PARALLEL_JOBS            ; fi
+    if [ "$BUILDER" == catkin ]; then source install/setup.bash              ; fi
+    if [ "$BUILDER" == catkin ]; then export EXIT_STATUS=0; for pkg in $TARGET_PKG; do [ "`find install/share/$pkg -iname '*.test'`" == "" ] && echo "[$pkg] No tests ware found!!!"  || find install/share/$pkg -iname "*.test" -print0 | xargs -0 -n1 rostest || export EXIT_STATUS=$?; done; [ $EXIT_STATUS == 0 ] ; fi
+fi
