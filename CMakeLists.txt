@@ -82,7 +82,7 @@ add_service_files(
   FILES AddTwoInts.srv StringString.srv
 )
 add_message_files(
-  FILES String.msg StringStamped.msg
+  FILES String.msg StringStamped.msg FixedArray.msg
 )
 
 # CATKIN_MIGRATION: removed during catkin migration
@@ -101,6 +101,7 @@ add_rostest(test/test-tf.test)
 add_rostest(test/test-disconnect.test)
 add_rostest(test/test-multi-queue.test)
 add_rostest(test/test-parameter.test)
+add_rostest(test/test-anonymous.test)
 add_rostest(test/test-genmsg.catkin.test)
 # this will not ok on running from run_tests, may be running test within launch file may not good.
 #add_rostest(test/test-genmsg-oneworkspace.catkin.launch) # use launch not to run on travis/catkin
@@ -110,6 +111,12 @@ generate_messages(
   DEPENDENCIES geometry_msgs std_msgs
 )
 
+# copy bin/roseus to global bin
+add_custom_command(OUTPUT ${CATKIN_DEVEL_PREFIX}/bin/roseus
+  COMMAND cmake -E make_directory ${CATKIN_DEVEL_PREFIX}/bin/
+  COMMAND cmake -E copy ${PROJECT_SOURCE_DIR}/bin/roseus ${CATKIN_DEVEL_PREFIX}/bin/roseus
+  DEPENDS bin/roseus)
+add_custom_target(install_roseus ALL DEPENDS ${CATKIN_DEVEL_PREFIX}/bin/roseus roseus eustf roseus_c_util)
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
@@ -118,12 +125,10 @@ catkin_package(
     CATKIN_DEPENDS message_runtime # euslisp TODO
     INCLUDE_DIRS # TODO include
     LIBRARIES # TODO
+    EXPORTED_TARGETS install_roseus
     CFG_EXTRAS roseus.cmake
 )
 
-# copy bin/roseus to global bin
-execute_process(COMMAND cmake -E make_directory ${CATKIN_DEVEL_PREFIX}/bin/)
-execute_process(COMMAND cmake -E copy ${PROJECT_SOURCE_DIR}/bin/roseus ${CATKIN_DEVEL_PREFIX}/bin/roseus)
 install(PROGRAMS bin/roseus
   DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
 # install
@@ -136,4 +141,8 @@ install(DIRECTORY euslisp test scripts cmake
 
 include(cmake/roseus.cmake)
 
+generate_eusdoc(euslisp/roseus.l)
+generate_eusdoc(euslisp/roseus-utils.l)
+generate_eusdoc(euslisp/eustf.l)
+generate_eusdoc(euslisp/actionlib.l)
 
