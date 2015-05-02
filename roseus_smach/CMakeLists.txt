@@ -1,7 +1,16 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(roseus_smach)
 
-find_package(catkin REQUIRED COMPONENTS euslisp roseus smach smach_ros smach_msgs)
+find_package(catkin REQUIRED COMPONENTS euslisp rostest std_msgs actionlib smach smach_ros smach_msgs message_generation roseus)
+
+add_action_files(
+  DIRECTORY action
+  FILES
+  Multiply10.action
+  Sub5.action)
+
+generate_messages(
+  DEPENDENCIES actionlib_msgs std_msgs)
 
 catkin_package(
 #    DEPENDS 
@@ -13,3 +22,7 @@ catkin_package(
 install(DIRECTORY sample src test
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
         USE_SOURCE_PERMISSIONS)
+
+add_rostest(test/test-samples.launch)
+add_rostest(test/test_async_join_state_machine_actionlib.launch)
+add_rostest(test/test_parallel_state_machine_sample.launch)
