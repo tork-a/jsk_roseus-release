@@ -69,9 +69,9 @@ else()
  add_definitions(-Di486)
 endif()
 
-if(${CMAKE_SYSTEM_NAME} MATCHES Darwin)
- add_definitions(-Dx86_64)
- set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -flat_namespace -undefined suppress")
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS} -undefined dynamic_lookup")
+  set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
 
 include_directories(${Boost_INCLUDE_DIRS})
@@ -144,7 +144,7 @@ install(DIRECTORY euslisp test scripts cmake
 
 include(cmake/roseus.cmake)
 
-generate_eusdoc(euslisp/roseus.l)
+generate_eusdoc(euslisp/roseus.l "ROS")
 generate_eusdoc(euslisp/roseus-utils.l)
 generate_eusdoc(euslisp/eustf.l)
 generate_eusdoc(euslisp/actionlib.l)
