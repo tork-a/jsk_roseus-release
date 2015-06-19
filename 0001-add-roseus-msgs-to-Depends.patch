@@ -1,4 +1,4 @@
-From d604e715cadce0a92cfd8c96355437d38ad1c7c3 Mon Sep 17 00:00:00 2001
+From 7d2c675c47553364d8179af6c735c6a0983eae2d Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sun, 11 May 2014 16:28:37 +0900
 Subject: [PATCH 1/2] add roseus-msgs to Depends
