@@ -2,6 +2,15 @@
 Changelog for package jsk_roseus
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.7 (2015-08-18)
+------------------
+* adding build_depends to package.xml was wrong.
+  ```
+  WARNING: Metapackage "jsk_roseus" should not have other dependencies besides a buildtool_depend on catkin and run_depends.
+  ```
+* [package.xml] add build depend to roseus to avoid race condition on creating .catkin file
+* Contributors: Kei Okada
+
 1.3.6 (2015-06-11)
 ------------------
 
