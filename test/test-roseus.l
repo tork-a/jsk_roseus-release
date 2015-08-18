@@ -32,6 +32,51 @@
 
   )
 
+(ros::load-ros-manifest "std_msgs")
+(defun equal-vector-list (a b &optional (eps *epsilon*))
+  (every #'(lambda (x y) (eps-v= x y eps)) a b))
+(deftest test-marker-msg ()
+  (let (b)
+    (assert (equal (vector->rgba #f(255 255 0)) (instance std_msgs::ColorRGBA :init :r 255 :g 255 :b 0 :a 1)))
+    (setq b (marker-msg->shape/cylinder (cylinder->marker-msg (make-cylinder 100 100) (instance std_msgs::header))))
+    (assert (equal-vector-list (send b :vertices) (send (make-cylinder 100 100) :vertices)))
+    (setq b (marker-msg->shape/cube (cube->marker-msg (make-cube 100 100 100) (instance std_msgs::header))))
+    (assert (equal-vector-list (send b :vertices) (send (make-cube 100 100 100) :vertices)))
+    (setq b (marker-msg->shape/sphere (sphere->marker-msg (make-sphere 100) (instance std_msgs::header))))
+    (assert (equal-vector-list (send b :vertices) (send (make-sphere 100) :vertices)))
+    (setq b (line->marker-msg (list #f(0 0 0) #f(100 100 100)) (instance std_msgs::header)))
+    (assert (equal-vector-list (mapcar #'(lambda (l) (ros::tf-point->pos l)) (send b :points)) (list #f(0 0 0) #f(100 100 100))))
+    (setq b (line-list->marker-msg (list #f(0 0 0) #f(100 100 100)) (instance std_msgs::header)))
+    (assert (equal-vector-list (mapcar #'(lambda (l) (ros::tf-point->pos l)) (send b :points)) (list #f(0 0 0) #f(100 100 100))))
+    ;;
+    (assert (faces->marker-msg (send (make-cube 100 100 100) :faces) (instance std_msgs::header)))
+    (assert (object->marker-msg (make-cube 100 100 100) (instance std_msgs::header)))
+    (assert (wireframe->marker-msg (make-cube 100 100 100) (instance std_msgs::header)))
+    (assert (text->marker-msg "test" (make-coords) (instance std_msgs::header)))
+    (assert (coords->marker-msg (make-coords) (instance std_msgs::header)))
+    ;; (mesh->marker-msg)
+    (when (functionp 'make-random-pointcloud) ;; only available on jskeus >= 1.0.9
+      (let ((pc (make-random-pointcloud :num 100 :with-color t :with-normal t)))
+        (assert (pointcloud->marker-msg pc (instance std_msgs::header))))
+      (let ((pc (make-random-pointcloud :num 100 :with-color t :with-normal t))
+            msg)
+        (assert
+         (setq msg (make-ros-msg-from-eus-pointcloud pc)))
+        (let ((rt (make-eus-pointcloud-from-ros-msg msg)))
+          (assert (= (send pc :size) (send rt :size)))
+          (assert (equal-vector-list (send pc :point-list) (send rt :point-list)))
+          ;; color conversion ( float -> uint8 -> float ) may change color value
+          (assert (equal-vector-list (send pc :color-list) (send rt :color-list) 0.007))
+          (assert (equal-vector-list (send pc :normal-list) (send rt :normal-list)))
+          )))
+    (assert (eusobj->marker-msg (make-cube 100 100 100) (instance std_msgs::header)))
+    (assert (arrow->marker-msg (make-coords) (instance std_msgs::header)))
+    (assert (marker-msg->shape (cylinder->marker-msg (make-cylinder 100 100) (instance std_msgs::header))))
+    (assert (marker-msg->shape (cube->marker-msg (make-cube 100 100 100) (instance std_msgs::header))))
+    (assert (marker-msg->shape (sphere->marker-msg (make-sphere 100) (instance std_msgs::header))))
+    ;;
+    ))
+
 (run-all-tests)
 
 (exit)
