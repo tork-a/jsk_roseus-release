@@ -2,6 +2,9 @@
 Changelog for package roseus_smach
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.8 (2015-09-12)
+------------------
+
 1.3.7 (2015-08-18)
 ------------------
 * [README.md] describe how to run smach viewer
