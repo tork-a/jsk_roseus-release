@@ -88,23 +88,23 @@
    (setq action-goal-class     (class (send action-spec :action_goal))
          action-result-class   (class (send action-spec :action_result))
          action-feedback-class (class (send action-spec :action_feedback)))
-   (ros::advertise (format nil "~A/goal" name-space) action-goal-class 0)
-   (ros::advertise (format nil "~A/cancel" name-space) actionlib_msgs::GoalID 0)
+   (ros::advertise (format nil "~A/goal" name-space) action-goal-class 10)
+   (ros::advertise (format nil "~A/cancel" name-space) actionlib_msgs::GoalID 10)
    (cond
     (groupname
      (ros::subscribe (format nil "~A/status" name-space)
-                     actionlib_msgs::GoalStatusArray #'send self :goal-status-cb 0 :groupname groupname)
+                     actionlib_msgs::GoalStatusArray #'send self :goal-status-cb 1 :groupname groupname)
      (ros::subscribe (format nil "~A/result" name-space)
-                     action-result-class #'send self :action-result-cb 0 :groupname groupname)
+                     action-result-class #'send self :action-result-cb 1 :groupname groupname)
      (ros::subscribe (format nil "~A/feedback" name-space)
-                     action-feedback-class #'send self :action-feedback-cb 0 :groupname groupname))
+                     action-feedback-class #'send self :action-feedback-cb 1 :groupname groupname))
     (t
      (ros::subscribe (format nil "~A/status" name-space)
-                     actionlib_msgs::GoalStatusArray #'send self :goal-status-cb 0)
+                     actionlib_msgs::GoalStatusArray #'send self :goal-status-cb 1)
      (ros::subscribe (format nil "~A/result" name-space)
-                     action-result-class #'send self :action-result-cb 0)
+                     action-result-class #'send self :action-result-cb 1)
      (ros::subscribe (format nil "~A/feedback" name-space)
-                     action-feedback-class #'send self :action-feedback-cb 0)))
+                     action-feedback-class #'send self :action-feedback-cb 1)))
    (setq simple-state ros::*simple-goal-state-done*)
    self)
   (:wait-for-server
@@ -145,7 +145,7 @@
 	 (ros::ros-warn "goal_id's id is already set in goal instance. But :send-goal will overwrite")
        )
      (setq goal_id (instance actionlib_msgs::GoalID :init
-                             :id (format nil "~A_~A_~A_~A" (ros::get-name) (unix::getpid) name-space seq-count)))
+                             :id (format nil "~A_~A_~A_~A_~A" (send (ros::time-now) :to-nsec) (ros::get-name) (unix::getpid) name-space seq-count)))
      (incf seq-count)
      (send goal :goal_id goal_id)
      (setq simple-state ros::*simple-goal-state-pending*)
@@ -169,6 +169,10 @@
    (let ((start (ros::time-now))
 	 (result-topic (format nil "~A/result" name-space)))
      (ros::ros-debug "[~A] :wait-for-result ~A, timeout=~A" name-space (if goal_id (send goal_id :id)) timeout)
+     (unless goal_id
+       ;; https://github.com/ros/actionlib/blob/285c60265f18b683b1439accc9603c1e8be30a23/src/actionlib/simple_action_client.py#L128
+       (ros::ros-error "[~A] :wait-for-result (return nil when no goal exists)" name-space)
+       (return-from :wait-for-result nil))
      (ros::rate 10)
      (while (ros::ok)
        (ros::ros-debug "[~A] :wait-for-result ~A ~A" name-space (simple-goal-states-to-string simple-state) (send comm-state :state))
@@ -355,20 +359,20 @@
    (setq action-goal-class     (class (send action-spec :action_goal))
          action-result-class   (class (send action-spec :action_result))
          action-feedback-class (class (send action-spec :action_feedback)))
-   (ros::advertise (format nil "~A/status" name-space) actionlib_msgs::GoalStatusArray)
-   (ros::advertise (format nil "~A/result" name-space) action-result-class)
-   (ros::advertise (format nil "~A/feedback" name-space) action-feedback-class)
+   (ros::advertise (format nil "~A/status" name-space) actionlib_msgs::GoalStatusArray 50)
+   (ros::advertise (format nil "~A/result" name-space) action-result-class 50)
+   (ros::advertise (format nil "~A/feedback" name-space) action-feedback-class 50)
    (cond
     (groupname
      (ros::subscribe (format nil "~A/goal" name-space)
-                     action-goal-class #'send self :goal-callback 0 :groupname groupname)
+                     action-goal-class #'send self :goal-callback 50 :groupname groupname)
      (ros::subscribe (format nil "~A/cancel" name-space)
-                     actionlib_msgs::GoalID #'send self :cancel-callback 0 :groupname groupname))
+                     actionlib_msgs::GoalID #'send self :cancel-callback 50 :groupname groupname))
     (t
      (ros::subscribe (format nil "~A/goal" name-space)
-                     action-goal-class #'send self :goal-callback 0)
+                     action-goal-class #'send self :goal-callback 50)
      (ros::subscribe (format nil "~A/cancel" name-space)
-                     actionlib_msgs::GoalID #'send self :cancel-callback 0)))
+                     actionlib_msgs::GoalID #'send self :cancel-callback 50)))
    ;; need getparam for status_frequence, status_list_timeout
    )
   ;;
