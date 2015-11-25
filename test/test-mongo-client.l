@@ -41,7 +41,16 @@
 
   (setq res-many (mongo::query geometry_msgs::Pose :sort '((:natural . 1 )) :msg-only t))
   (dotimes (i 10)
-    (assert (eq (float i) (send (elt res-many i) :position :x)))))
+    (assert (eq (float i) (send (elt res-many i) :position :x))))
+
+  ;; test if installed latest mongodb_store
+  (setq amsg (instance mongodb_store_msgs::MongoQueryMsgRequest :init))
+  (when (memq :limit (send amsg :methods))
+    (setq assume-5-msgs (mongo::query geometry_msgs::Pose :sort '((:natural . 1)) :msg-only t :limit 5))
+    (assert (= (length assume-5-msgs) 5))
+    (dotimes (i 5)
+      (assert (eq (float i) (send (elt assume-5-msgs i) :position :x)))))
+)
 
 (run-all-tests)
 (exit)
