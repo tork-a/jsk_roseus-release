@@ -1,21 +1,23 @@
-jsk_roseus [![Build Status](https://travis-ci.org/jsk-ros-pkg/jsk_roseus.png?branch=master)](https://travis-ci.org/jsk-ros-pkg/jsk_roseus) [![Documentation Status](https://readthedocs.org/projects/euslisp-docs/badge/?version=latest)](http://euslisp-docs.readthedocs.org/en/latest/roseus/)
-----------
+roseus_mongo
+============
 
-Tips
-====
+## parameters
 
-### Run roseus on gdb
-```
-gdb --args bash roseus foo.l
-```
+### mongodb related parameters
 
-Deb Status
-==========
-Package | Indigo (Saucy) | Indigo (Trusty) | Jade (Trusty) | Jade (Utopic) | Jade (Vivid)
-------- | -------------- | --------------- | ------------- | ------------- | ------------
-euslisp (32-bit) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-euslisp_binarydeb_saucy_i386)](http://jenkins.ros.org/job/ros-indigo-euslisp_binarydeb_saucy_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-euslisp_binarydeb_trusty_i386)](http://jenkins.ros.org/job/ros-indigo-euslisp_binarydeb_trusty_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-euslisp_binarydeb_trusty_i386)](http://jenkins.ros.org/job/ros-jade-euslisp_binarydeb_trusty_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-euslisp_binarydeb_utopic_i386)](http://jenkins.ros.org/job/ros-jade-euslisp_binarydeb_utopic_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-euslisp_binarydeb_vivid_i386)](http://jenkins.ros.org/job/ros-jade-euslisp_binarydeb_vivid_i386/)
-euslisp (64-bit) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-euslisp_binarydeb_saucy_amd64)](http://jenkins.ros.org/job/ros-indigo-euslisp_binarydeb_saucy_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-euslisp_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-indigo-euslisp_binarydeb_trusty_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-euslisp_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-jade-euslisp_binarydeb_trusty_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-euslisp_binarydeb_utopic_amd64)](http://jenkins.ros.org/job/ros-jade-euslisp_binarydeb_utopic_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-euslisp_binarydeb_vivid_amd64)](http://jenkins.ros.org/job/ros-jade-euslisp_binarydeb_vivid_amd64/)
-jskeus (32-bit) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-jskeus_binarydeb_saucy_i386)](http://jenkins.ros.org/job/ros-indigo-jskeus_binarydeb_saucy_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-jskeus_binarydeb_trusty_i386)](http://jenkins.ros.org/job/ros-indigo-jskeus_binarydeb_trusty_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-jskeus_binarydeb_trusty_i386)](http://jenkins.ros.org/job/ros-jade-jskeus_binarydeb_trusty_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-jskeus_binarydeb_utopic_i386)](http://jenkins.ros.org/job/ros-jade-jskeus_binarydeb_utopic_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-jskeus_binarydeb_vivid_i386)](http://jenkins.ros.org/job/ros-jade-jskeus_binarydeb_vivid_i386/)
-jskeus (64-bit) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-jskeus_binarydeb_saucy_amd64)](http://jenkins.ros.org/job/ros-indigo-jskeus_binarydeb_saucy_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-jskeus_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-indigo-jskeus_binarydeb_trusty_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-jskeus_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-jade-jskeus_binarydeb_trusty_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-jskeus_binarydeb_utopic_amd64)](http://jenkins.ros.org/job/ros-jade-jskeus_binarydeb_utopic_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-jskeus_binarydeb_vivid_amd64)](http://jenkins.ros.org/job/ros-jade-jskeus_binarydeb_vivid_amd64/)
-roseus (32-bit) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-roseus_binarydeb_saucy_i386)](http://jenkins.ros.org/job/ros-indigo-roseus_binarydeb_saucy_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-roseus_binarydeb_trusty_i386)](http://jenkins.ros.org/job/ros-indigo-roseus_binarydeb_trusty_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-roseus_binarydeb_trusty_i386)](http://jenkins.ros.org/job/ros-jade-roseus_binarydeb_trusty_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-roseus_binarydeb_utopic_i386)](http://jenkins.ros.org/job/ros-jade-roseus_binarydeb_utopic_i386/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-roseus_binarydeb_vivid_i386)](http://jenkins.ros.org/job/ros-jade-roseus_binarydeb_vivid_i386/)
-roseus (64-bit) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-roseus_binarydeb_saucy_amd64)](http://jenkins.ros.org/job/ros-indigo-roseus_binarydeb_saucy_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-roseus_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-indigo-roseus_binarydeb_trusty_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-roseus_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-jade-roseus_binarydeb_trusty_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-roseus_binarydeb_utopic_amd64)](http://jenkins.ros.org/job/ros-jade-roseus_binarydeb_utopic_amd64/) | [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-roseus_binarydeb_vivid_amd64)](http://jenkins.ros.org/job/ros-jade-roseus_binarydeb_vivid_amd64/)
+- `*mongo-database*`: database name used by mongodb (default: param `robot/database` or "test")
+- `*mongo-collection*`: collection name used by mongodb (default: param `robot/name` or "test")
+- `*mongo-query-default-buffer-size*`: buffer size reserved for storing json raw string while translation (default: 4096 [byte])
+- `*mongo-service-query*`: service name of querying message (default: "/message_store/query_messages")
+- `*mongo-service-insert*`: service name of inserting message (default: "/message_store/insert")
+- `*mongo-service-delete*`: service name of deleting message (default: "/message_store/delete")
+
+### json(bson) related parameters
+
+- `*json-parse-object-as*`: destination type of evaluating json object (`:alist` or `:plist`, default: `:alist`)
+- `*json-parse-key-function*`: destination type of key when evaluation json object (`#'identity`, `#'string->keyword` or possible other functions, default: `#'string->keyword`)
+
+
+## How to use
+
+see [euslisp/mongo-client-sample.l](euslisp/mongo-client-sample.l)
