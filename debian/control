@@ -1,0 +1,12 @@
+Source: ros-jade-roseus-mongo
+Section: misc
+Priority: extra
+Maintainer: Yuki Furuta <furushchev@jsk.imi.i.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-jade-catkin, ros-jade-mongodb-store, ros-jade-mongodb-store-msgs, ros-jade-roseus, ros-jade-rostest
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jade-roseus-mongo
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jade-mongodb-store, ros-jade-mongodb-store-msgs, ros-jade-roseus
+Description: The roseus_mongo package
