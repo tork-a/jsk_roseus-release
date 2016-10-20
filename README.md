@@ -1,3 +1,34 @@
+## jsk_roseus (kinetic) - 1.6.0-0
+
+The packages in the `jsk_roseus` repository were released into the `kinetic` distro by running `/usr/bin/bloom-release jsk_roseus --track kinetic --rosdistro kinetic` on `Thu, 20 Oct 2016 23:59:18 -0000`
+
+These packages were released:
+- `jsk_roseus`
+- `roseus`
+- `roseus_smach`
+
+These packages were explicitly ignored:
+- `roseus_msgs`
+- `roseus_tutorials`
+- `roseus_mongo`
+
+Version of package(s) in repository `jsk_roseus`:
+
+- upstream repository: https://github.com/jsk-ros-pkg/jsk_roseus
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `1.6.0-0`
+
+Versions of tools used:
+
+- bloom version: `0.5.22`
+- catkin_pkg version: `0.2.10`
+- rosdep version: `0.11.5`
+- rosdistro version: `0.4.7`
+- vcstools version: `0.1.39`
+
+
 ## jsk_roseus (jade) - 1.6.0-0
 
 The packages in the `jsk_roseus` repository were released into the `jade` distro by running `/var/lib/jenkins/send_to_bloom.py jsk-ros-pkg jsk_roseus` on `Sun, 02 Oct 2016 00:53:06 -0000`
