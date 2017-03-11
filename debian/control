@@ -1,0 +1,12 @@
+Source: ros-kinetic-roseus
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), coreutils, ros-kinetic-actionlib, ros-kinetic-actionlib-msgs, ros-kinetic-actionlib-tutorials, ros-kinetic-angles, ros-kinetic-catkin, ros-kinetic-dynamic-reconfigure, ros-kinetic-euslisp, ros-kinetic-geneus, ros-kinetic-geometry-msgs, ros-kinetic-jskeus, ros-kinetic-message-generation, ros-kinetic-mk, ros-kinetic-rosbash, ros-kinetic-rosbuild, ros-kinetic-roscpp, ros-kinetic-roslang, ros-kinetic-rosmsg, ros-kinetic-rosnode, ros-kinetic-rospack, ros-kinetic-rostest, ros-kinetic-rostopic, ros-kinetic-sensor-msgs, ros-kinetic-std-msgs, ros-kinetic-std-srvs, ros-kinetic-tf, ros-kinetic-tf2-ros, ros-kinetic-visualization-msgs, xvfb
+Homepage: http://pr.willowgarage.com/wiki/roseus
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-roseus
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-actionlib, ros-kinetic-actionlib-msgs, ros-kinetic-actionlib-tutorials, ros-kinetic-dynamic-reconfigure, ros-kinetic-euslisp, ros-kinetic-geneus, ros-kinetic-geometry-msgs, ros-kinetic-jskeus, ros-kinetic-message-runtime, ros-kinetic-rosbash, ros-kinetic-roscpp, ros-kinetic-roslang, ros-kinetic-rosmsg, ros-kinetic-rosnode, ros-kinetic-rospack, ros-kinetic-rostest, ros-kinetic-sensor-msgs, ros-kinetic-std-msgs, ros-kinetic-std-srvs, ros-kinetic-tf, ros-kinetic-tf2-ros, ros-kinetic-visualization-msgs
+Description: EusLisp client for ROs Robot Operating System.
