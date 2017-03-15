@@ -2,6 +2,100 @@
 Changelog for package jsk_travis
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.4.25 (2017-02-17)
+-------------------
+* Use X server of travis node (`#323 <https://github.com/jsk-ros-pkg/jsk_travis/issues/323>`_)
+  * [.travis.yml] allow failures on jade / kinetic gazebo test
+  * enable gazebo camera test
+  * Use host X11 server for docker
+* [travis_jenkins.py] delete: remove containers more than 48 hours ago (`#324 <https://github.com/jsk-ros-pkg/jsk_travis/issues/324>`_)
+  * [README.md] add description of DOCKER_RUN_OPTION
+  * [travis_jenkins.py] delete: remove containers more than 48 hours ago
+* Contributors: Kei Okada, Yuki Furuta
+
+0.4.24 (2017-02-14)
+-------------------
+* [travis.sh] fix typo EXTRA_DEBS -> EXTRA_DEBS
+* Contributors: Yuki Furuta
+
+0.4.23 (2017-02-08)
+-------------------
+* [dummy.xorg.conf] update for supporting GLX
+* Contributors: Yuki Furuta
+
+0.4.22 (2016-10-21)
+-------------------
+* Fix too many logs caused in travis_jenkins.py (`#319 <https://github.com/jsk-ros-pkg/jsk_travis/issues/319>`_ from wkentaro/docker-ps-a)
+
+  * https://github.com/jsk-ros-pkg/jsk_travis/commit/be5a632999c069e107773b6a0347bee51bae0d89
+
+* Enable gazebo test (`#316 <https://github.com/jsk-ros-pkg/jsk_travis/issues/316>`_)
+* [travis_watchdog.py] add watchdog for travis and kill orphan docker container on jenkins (`#317 <https://github.com/jsk-ros-pkg/jsk_travis/issues/317>`_)
+* [travis_jenkins.py] enable testing jsk_travis repository on jenkins (`#315 <https://github.com/jsk-ros-pkg/jsk_travis/issues/315>`_)
+* [travis.sh] fix error "too many arguments" at line 64-65 (`#314 <https://github.com/jsk-ros-pkg/jsk_travis/issues/314>`_)
+* [docker.sh] set +x while executing travis_wait function on docker (`#312 <https://github.com/jsk-ros-pkg/jsk_travis/issues/312>`_)
+
+* Contributors: Kei Okada, Kentaro Wada, Yuki Furuta
+
+0.4.21 (2016-09-21)
+-------------------
+* Check jsk_travis version on Travis
+* Contributors: Kentaro Wada
+
+0.4.20 (2016-09-14)
+-------------------
+* check if install/share/pkg exists (`#310 <https://github.com/jsk-ros-pkg/jsk_travis/issues/310>`_)
+* Contributors: Kei Okada
+
+0.4.19 (2016-09-10)
+-------------------
+* support docker on travis (`#307 <https://github.com/jsk-ros-pkg/jsk_travis/issues/307>`_)
+* Prettify the logging output at checking jsk_travis version (`#306 <https://github.com/jsk-ros-pkg/jsk_travis/issues/306>`_)
+  * Prettify the logging output at checking jsk_travis version
+  * Describe about not supported downgrading jsk_travis in README
+* Add version information about jsk_travis (`#305 <https://github.com/jsk-ros-pkg/jsk_travis/issues/305>`_)
+* Contributors: Kei Okada, Kentaro Wada, Yuki Furuta
+
+0.4.18 (2016-08-17)
+-------------------
+* Set CATKIN_TOOLS_BUILD_OPTIONS after the installation of catkin-tools (`#302 <https://github.com/jsk-ros-pkg/jsk_travis/issues/302>`_)
+* Contributors: Kentaro Wada
+
+0.4.17 (2016-08-12)
+-------------------
+* Use travis_wait for catkin_build which does not outputs more than 10min (`#298 <https://github.com/jsk-ros-pkg/jsk_travis/issues/298>`_) This is enough for #296
+* [travis.sh] add -iv for hydro, --limit-status-rate 0.002 to avoid no output 10min (`#296 <https://github.com/jsk-ros-pkg/jsk_travis/issues/296>`_)
+* Describe about CATKIN_TOOLS_BUILD_OPTIONS for change in `#297 <https://github.com/jsk-ros-pkg/jsk_travis/issues/297>`_ (`#301 <https://github.com/jsk-ros-pkg/jsk_travis/issues/301>`_)
+* Set default --no-status to CATKIN_TOOLS_BUILD_OPTIONS (`#297 <https://github.com/jsk-ros-pkg/jsk_travis/issues/297>`_)
+  This commit fixes belows:
+  - Typo "ROS_DISTRO" should be "$ROS_DISTRO", but checking catkin-tools
+  version is better.
+  - Replace `--limit-status 0.002` with `--no-status` the status limit
+  should be specified in .travis.yml like
+  `export CATKIN_TOOLS_BUILD_OPTIONS="-iv --summarize --limit-status 0.001"`.
+* [travis.sh] fix typo (`#299 <https://github.com/jsk-ros-pkg/jsk_travis/issues/299>`_)
+  - Fix typo in generating job name: a-f -> a-z (`#294 <https://github.com/jsk-ros-pkg/jsk_travis/issues/294>`_)
+* Contributors: Yuki Furuta, Kentaro Wada
+
+0.4.16 (2016-08-07)
+-------------------
+* Fix ubuntu distro name in job_name (`#292 <https://github.com/jsk-ros-pkg/jsk_travis/issues/292>`_)
+  * Set identical job name with BEFORE_SCRIPT & ROS_REPOSITORY_PATH
+  * Fix ubuntu distro name in job_name
+* Refactor travis.sh with newline in if block (`#291 <https://github.com/jsk-ros-pkg/jsk_travis/issues/291>`_)
+* Contributors: Kentaro Wada
+
+0.4.15 (2016-08-03)
+-------------------
+* Remove no need grepping with the default CATKIN_TOOLS_BUILD_OPTIONS (`#289 <https://github.com/jsk-ros-pkg/jsk_travis/issues/289>`_)
+  The default option is `--summarize --no-status` so there is no  `Symlinking..` output, so we can remove this line.
+* Contributors: Kentaro Wada
+
+0.4.14 (2016-07-29)
+-------------------
+* Use catkin 0.6.12 to fix `#286 <https://github.com/jsk-ros-pkg/jsk_travis/issues/286>`_ (`#287 <https://github.com/jsk-ros-pkg/jsk_travis/issues/287>`_)
+* Contributors: Kentaro Wada
+
 0.4.13 (2016-07-21)
 -------------------
 * Stop using HEAD version catkin on hydro (`#285 <https://github.com/jsk-ros-pkg/jsk_travis/issues/285>`_)
