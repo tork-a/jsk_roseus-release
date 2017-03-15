@@ -1,4 +1,4 @@
-From cbac3e864a1772ade7c029bf5f895397830c106e Mon Sep 17 00:00:00 2001
+From f5bb5ac694080063299b3ed0190fdddcb8ff8d01 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sat, 11 Mar 2017 10:19:00 +0900
 Subject: [PATCH] comment out uvc_camera for jade
@@ -21,5 +21,5 @@ index 4b713fd..6f85de7 100644
    <run_depend>opencv_apps</run_depend>
    <!-- <run_depend>saliency_tracking<run_depend> -->
 -- 
-1.9.1
+1.9.0
 
