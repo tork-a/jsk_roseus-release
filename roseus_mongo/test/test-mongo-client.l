@@ -6,11 +6,11 @@
 
 (init-unit-test)
 
-(deftest mongo-client-param
+(deftest mongo-client-param ()
   (assert (string= *mongo-database* "test_database"))
   (assert (string= *mongo-collection* "test_collection")))
 
-(deftest mongo-client
+(deftest mongo-client ()
 
   (mongo::wait-for-server)
 
@@ -51,6 +51,19 @@
     (dotimes (i 5)
       (assert (eq (float i) (send (elt assume-5-msgs i) :position :x)))))
 )
+
+(deftest mongo-client-timeout ()
+  (setq *mongo-service-timeout* 1)
+  (setq *mongo-service-insert* "/dummy/insert")
+
+  (setq start-time (ros::time-now))
+  (setq msg (instance geometry_msgs::Pose :init
+                      :position (instance geometry_msgs::Point :init :x 1 :y 2 :z 3)))
+  (setq doc-id (mongo::insert msg))
+  (setq elapsed-time (ros::time- (ros::time-now) start-time))
+  (assert (null doc-id))
+  (assert (< (send elapsed-time :to-sec) 2)))
+
 
 (run-all-tests)
 (exit)
