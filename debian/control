@@ -1,0 +1,12 @@
+Source: ros-kinetic-roseus-tutorials
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin, ros-kinetic-roseus, ros-kinetic-rostest
+Homepage: http://ros.org/wiki/roseus_tutorials
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-roseus-tutorials
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-ar-track-alvar, ros-kinetic-checkerboard-detector, ros-kinetic-image-proc, ros-kinetic-image-view2, ros-kinetic-jsk-recognition-msgs, ros-kinetic-opencv-apps, ros-kinetic-posedetection-msgs, ros-kinetic-pr2eus, ros-kinetic-visualization-msgs
+Description: roseus_tutorials
