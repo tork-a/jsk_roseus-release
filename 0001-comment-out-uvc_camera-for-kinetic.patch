@@ -1,4 +1,4 @@
-From 54d3de0dd56fba1c6d8f969b76d29961b114caa1 Mon Sep 17 00:00:00 2001
+From 6d8b05e151032dfebe64d7d4ed28e32662103d3a Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sat, 11 Mar 2017 10:43:15 +0900
 Subject: [PATCH] comment out uvc_camera for kinetic
@@ -21,5 +21,5 @@ index 4b713fd..6f85de7 100644
    <run_depend>opencv_apps</run_depend>
    <!-- <run_depend>saliency_tracking<run_depend> -->
 -- 
-1.9.1
+1.9.0
 
