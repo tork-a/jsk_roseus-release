@@ -90,7 +90,7 @@ extern "C" {
   byte *get_string(register pointer s){
     if (isstring(s)) return(s->c.str.chars);
     if (issymbol(s)) return(s->c.sym.pname->c.str.chars);
-    else error(E_NOSTRING);}
+    else error(E_NOSTRING); return NULL; }
 }
 
 #undef class
@@ -285,7 +285,8 @@ public:
     a = (pointer)findmethod(ctx,K_ROSEUS_DESERIALIZE,classof(_message),&curclass);
     ROS_ASSERT(a!=NIL);
     pointer p = makestring((char *)readPtr, sz);
-    pointer r = csend(ctx,_message,K_ROSEUS_DESERIALIZE,1,p);
+    pointer r;
+    r = csend(ctx,_message,K_ROSEUS_DESERIALIZE,1,p);
     ROS_ASSERT(r!=NIL);
     //ROS_INFO("deserialize %d", __serialized_length);
     vpop(); // pop _message
@@ -466,9 +467,15 @@ public:
     eus_res.replaceContents(r);
     // check return value is valid
     pointer ret_serialize_method, ret_class;
-    ret_serialize_method = (pointer)findmethod(ctx,K_ROSEUS_SERIALIZATION_LENGTH,classof(r),&ret_class);
-    if (ret_serialize_method == NIL) {
+    if (ispointer(r)) {
+      ret_serialize_method = (pointer)findmethod(ctx,K_ROSEUS_SERIALIZATION_LENGTH,classof(r),&ret_class); }
+    if (!ispointer(r) || ret_serialize_method == NIL) {
       ROS_ERROR("you may not return valid value in service callback");
+      vpop(); // _res._message, _req._message, eus_msg._message, r
+      vpop(); // _res._message, _req._message, eus_msg._message
+      vpop(); // _res._message, _req._message,
+      vpop(); // _res._message
+      return false;
     }
     vpush(eus_res._message);    // _res._message, _req._message, eus_msg._message, r, eus_res._message
     uint32_t serialized_length = eus_res.serializationLength();
@@ -498,7 +505,7 @@ public:
     vpop(); // _res._message, _req._message, eus_msg._message
     vpop(); // _res._message, _req._message,
     vpop(); // _res._message
-    return(T);
+    return true;
   }
 };
 
@@ -1696,7 +1703,7 @@ pointer ROSEUS_CREATE_TIMER(register context *ctx,int n,pointer *argv)
   isInstalledCheck;
   numunion nu;
   bool oneshot = false;
-  pointer fncallback, args;
+  pointer fncallback = NIL, args;
   NodeHandle *lnode = s_node.get();
   string fncallname;
   float period=ckfltval(argv[0]);
@@ -1796,7 +1803,7 @@ pointer ___roseus(register context *ctx, int n, pointer *argv, pointer env)
   _defun(ctx,"EXIT",argv[0],(pointer (*)())ROSEUS_EXIT, "Exit ros clinet");
 
   _defun(ctx,"SUBSCRIBE",argv[0],(pointer (*)())ROSEUS_SUBSCRIBE,
-         "topicname message_type callbackfunc args0 ... argsN &optional queuesize %key (:groupname groupname)\n\n"
+         "topicname message_type callbackfunc args0 ... argsN &optional (queuesize 1) %key (:groupname groupname)\n\n"
          "Subscribe to a topic, version for class member function with bare pointer.\n"
          "This method connects to the master to register interest in a given topic. The node will automatically be connected with publishers on this topic. On each message receipt, fp is invoked and passed a shared pointer to the message received. This message should not be changed in place, as it is shared with any other subscriptions to this topic.\n"
          "\n"
@@ -1821,7 +1828,7 @@ pointer ___roseus(register context *ctx, int n, pointer *argv, pointer env)
   _defun(ctx,"GET-NUM-PUBLISHERS",argv[0],(pointer (*)())ROSEUS_GETNUMPUBLISHERS, "Returns the number of publishers this subscriber is connected to. ");
   _defun(ctx,"GET-TOPIC-SUBSCRIBER",argv[0],(pointer (*)())ROSEUS_GETTOPICSUBSCRIBER, "topicname\n\n""Retuns the name of topic if it already subscribed");
   _defun(ctx,"ADVERTISE",argv[0],(pointer (*)())ROSEUS_ADVERTISE,
-         "topic message_class &optional queuesize latch\n"
+         "topic message_class &optional (queuesize 1) (latch nil)\n"
          "Advertise a topic.\n"
          "This call connects to the master to publicize that the node will be publishing messages on the given topic. This method returns a Publisher that allows you to publish a message on this topic.\n"
          "	(ros::advertise \"chatter\" std_msgs::string 1)");
