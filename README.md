@@ -1,3 +1,34 @@
+## jsk_roseus (jade) - 1.6.2-0
+
+The packages in the `jsk_roseus` repository were released into the `jade` distro by running `./send_to_bloom.py jsk-ros-pkg jsk_roseus` on `Wed, 21 Jun 2017 15:00:32 -0000`
+
+These packages were released:
+- `jsk_roseus`
+- `roseus`
+- `roseus_mongo`
+- `roseus_smach`
+- `roseus_tutorials`
+
+These packages were explicitly ignored:
+- `roseus_msgs`
+
+Version of package(s) in repository `jsk_roseus`:
+
+- upstream repository: https://github.com/jsk-ros-pkg/jsk_roseus
+- release repository: https://github.com/tork-a/jsk_roseus-release.git
+- rosdistro version: `1.6.1-0`
+- old version: `1.6.1-0`
+- new version: `1.6.2-0`
+
+Versions of tools used:
+
+- bloom version: `0.5.26`
+- catkin_pkg version: `0.3.5`
+- rosdep version: `0.11.5`
+- rosdistro version: `0.6.2`
+- vcstools version: `0.1.39`
+
+
 ## jsk_roseus (indigo) - 1.6.2-0
 
 The packages in the `jsk_roseus` repository were released into the `indigo` distro by running `./send_to_bloom.py jsk-ros-pkg jsk_roseus` on `Wed, 21 Jun 2017 14:36:51 -0000`
