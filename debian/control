@@ -1,0 +1,12 @@
+Source: ros-kinetic-roseus-mongo
+Section: misc
+Priority: extra
+Maintainer: Yuki Furuta <furushchev@jsk.imi.i.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin, ros-kinetic-mongodb-store, ros-kinetic-mongodb-store-msgs, ros-kinetic-roseus, ros-kinetic-rostest
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-roseus-mongo
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-mongodb-store, ros-kinetic-mongodb-store-msgs, ros-kinetic-roseus
+Description: The roseus_mongo package
