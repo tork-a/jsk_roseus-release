@@ -68,6 +68,9 @@
 #include <ros/this_node.h>
 #include <ros/node_handle.h>
 #include <ros/service.h>
+#include <ros/service_server_link.h>
+#include <ros/service_manager.h>
+#include <ros/connection.h>
 #include <rospack/rospack.h>
 #include <ros/param.h>
 #include <ros/callback_queue.h>
@@ -81,6 +84,11 @@
 
 #include "eus.h"
 extern "C" {
+#ifdef ROSPACK_EXPORT
+  rospack::ROSPack rp;
+#else
+  rospack::Rospack rp;
+#endif
   pointer ___roseus(register context *ctx, int n, pointer *argv, pointer env);
   void register_roseus(){
     char modname[] = "___roseus";
@@ -122,7 +130,7 @@ public:
   ~RoseusStaticData() {
   }
   boost::shared_ptr<ros::NodeHandle> node;
-  ros::Rate *rate;
+  boost::shared_ptr<ros::Rate> rate;
   map<string, boost::shared_ptr<Publisher> > mapAdvertised; ///< advertised topics
   map<string, boost::shared_ptr<Subscriber> > mapSubscribed; ///< subscribed topics
   map<string, boost::shared_ptr<ServiceServer> > mapServiced; ///< subscribed topics
@@ -141,7 +149,7 @@ static bool s_bInstalled = false;
 #define s_mapTimered s_staticdata.mapTimered
 #define s_mapHandle s_staticdata.mapHandle
 
-pointer K_ROSEUS_MD5SUM,K_ROSEUS_DATATYPE,K_ROSEUS_DEFINITION,K_ROSEUS_SERIALIZATION_LENGTH,K_ROSEUS_SERIALIZE,K_ROSEUS_DESERIALIZE,K_ROSEUS_INIT,K_ROSEUS_GET,K_ROSEUS_REQUEST,K_ROSEUS_RESPONSE,K_ROSEUS_GROUPNAME,K_ROSEUS_ONESHOT,K_ROSEUS_LAST_EXPECTED,K_ROSEUS_LAST_REAL,K_ROSEUS_CURRENT_EXPECTED,K_ROSEUS_CURRENT_REAL,K_ROSEUS_LAST_DURATION,K_ROSEUS_SEC,K_ROSEUS_NSEC,QANON,QNOOUT,QREPOVERSION,QROSDEBUG,QROSINFO,QROSWARN,QROSERROR,QROSFATAL;
+pointer K_ROSEUS_MD5SUM,K_ROSEUS_DATATYPE,K_ROSEUS_DEFINITION,K_ROSEUS_CONNECTION_HEADER,K_ROSEUS_SERIALIZATION_LENGTH,K_ROSEUS_SERIALIZE,K_ROSEUS_DESERIALIZE,K_ROSEUS_INIT,K_ROSEUS_GET,K_ROSEUS_REQUEST,K_ROSEUS_RESPONSE,K_ROSEUS_GROUPNAME,K_ROSEUS_ONESHOT,K_ROSEUS_LAST_EXPECTED,K_ROSEUS_LAST_REAL,K_ROSEUS_CURRENT_EXPECTED,K_ROSEUS_CURRENT_REAL,K_ROSEUS_LAST_DURATION,K_ROSEUS_SEC,K_ROSEUS_NSEC,QANON,QNOOUT,QREPOVERSION,QROSDEBUG,QROSINFO,QROSWARN,QROSERROR,QROSFATAL;
 extern pointer LAMCLOSURE;
 
 /***********************************************************
@@ -203,6 +211,7 @@ class EuslispMessage
 {
 public:
   pointer _message;
+  boost::shared_ptr<map<string, string> > _connection_header;
 
   EuslispMessage(pointer message) : _message(message) {
   }
@@ -295,6 +304,28 @@ public:
   }
 };
 
+void StoreConnectionHeader(EuslispMessage *eus_msg) {
+  if ( eus_msg->_connection_header == NULL ||
+       eus_msg->_connection_header->size() == 0 ) {
+    return;
+  }
+  context *ctx = current_ctx;
+  // store conection headers
+  register pointer ret, header;
+  ret = cons(ctx, NIL, NIL);
+  header = ret;
+  vpush(ret);
+  for(map<string, string>::iterator it = eus_msg->_connection_header->begin(); it != eus_msg->_connection_header->end(); it++){
+    ccdr(ret) = cons(ctx,cons(ctx,makestring((char *)it->first.c_str(), it->first.length()),
+                              makestring((char *)it->second.c_str(), it->second.length())),NIL);
+    ret = ccdr(ret);
+  }
+  /* (setslot obj class index newval) */
+  pointer slot_args[4] = {eus_msg->_message, classof(eus_msg->_message), K_ROSEUS_CONNECTION_HEADER, ccdr(header)};
+  SETSLOT(ctx, 4, slot_args);
+  vpop();
+}
+
 namespace ros{
   namespace serialization{
 template<> struct Serializer<EuslispMessage> {
@@ -324,7 +355,6 @@ public:
 
   EuslispSubscriptionCallbackHelper(pointer scb, pointer args,pointer tmpl) :  _args(args), _msg(tmpl) {
     context *ctx = current_ctx;
-    mutex_trylock(&mark_lock);
     //ROS_WARN("func");prinx(ctx,scb,ERROUT);flushstream(ERROUT);terpri(ERROUT);
     //ROS_WARN("argc");prinx(ctx,args,ERROUT);flushstream(ERROUT);terpri(ERROUT);
     if (piscode(scb)) { // compiled code
@@ -341,7 +371,6 @@ public:
     // avoid gc
     pointer p=gensym(ctx);
     setval(ctx,intern(ctx,(char*)(p->c.sym.pname->c.str.chars),strlen((char*)(p->c.sym.pname->c.str.chars)),lisppkg),cons(ctx,scb,args));
-    mutex_unlock(&mark_lock);
   }
   ~EuslispSubscriptionCallbackHelper() {
       ROS_ERROR("subscription gc");
@@ -352,11 +381,15 @@ public:
     cerr << "param.length = " << param.length << endl;
     cerr << "param.buffer = " << (param.buffer + 4) << endl;
     cerr << "c_header == " << param.connection_header << endl;
+    for(map<string, string>::iterator it = param.connection_header->begin(); it != param.connection_header->end(); it++){
+      cerr << "            " << it->first << " : " << it->second << endl;
+    }
 #endif
     ros::VoidConstPtr ptr(new EuslispMessage(_msg));
     EuslispMessage *eus_msg = (EuslispMessage *)(ptr.get());
     eus_msg->deserialize(param.buffer, param.length);
 
+    eus_msg->_connection_header = param.connection_header;
     return ptr;
   }
   virtual void call(ros::SubscriptionCallbackHelperCallParams& param) {
@@ -370,6 +403,9 @@ public:
     if ( ! ( issymbol(_scb) || piscode(_scb) || ccar(_scb)==LAMCLOSURE ) ) {
       ROS_ERROR("%s : can't find callback function", __PRETTY_FUNCTION__);
     }
+
+    // store connection header
+    StoreConnectionHeader(eus_msg);
     
     while(argp!=NIL){ ckpush(ccar(argp)); argp=ccdr(argp); argc++;}
     vpush((pointer)(eus_msg->_message));argc++;
@@ -401,7 +437,6 @@ public:
 
   EuslispServiceCallbackHelper(pointer scb, pointer args, string smd5, string sdatatype, pointer reqclass, pointer resclass) : _args(args), _req(reqclass), _res(resclass), md5(smd5), datatype(sdatatype) {
     context *ctx = current_ctx;
-    mutex_trylock(&mark_lock);
     //ROS_WARN("func");prinx(ctx,scb,ERROUT);flushstream(ERROUT);terpri(ERROUT);
     //ROS_WARN("argc");prinx(ctx,args,ERROUT);flushstream(ERROUT);terpri(ERROUT);
 
@@ -424,7 +459,6 @@ public:
     responseDataType = _res.__getDataType();
     requestMessageDefinition = _req.__getMessageDefinition();
     responseMessageDefinition = _res.__getMessageDefinition();
-    mutex_unlock(&mark_lock);
   }
   ~EuslispServiceCallbackHelper() { }
 
@@ -439,6 +473,15 @@ public:
   virtual std::string getResponseMessageDefinition() { return responseMessageDefinition; }
 
   virtual bool call(ros::ServiceCallbackHelperCallParams& params) {
+#if DEBUG
+    cerr << __PRETTY_FUNCTION__ << endl;
+    cerr << "param.length = " << params.request.num_bytes << endl;
+    cerr << "param.buffer = " << (params.request.message_start + 4) << endl;
+    cerr << "c_header == " << params.connection_header << endl;
+    for(map<string, string>::iterator it = params.connection_header->begin(); it != params.connection_header->end(); it++){
+      cerr << "            " << it->first << " : " << it->second << endl;
+    }
+#endif
     context *ctx = current_ctx;
     pointer r, argp=_args;
     int argc=0;
@@ -453,6 +496,10 @@ public:
     EuslispMessage eus_msg(_req);
     vpush(eus_msg._message);    // _res._message, _req._message, eus_msg._message
     eus_msg.deserialize(params.request.message_start, params.request.num_bytes);
+
+    // store connection header
+    eus_msg._connection_header = params.connection_header;
+    StoreConnectionHeader(&eus_msg);
 
     while(argp!=NIL){ ckpush(ccar(argp)); argp=ccdr(argp); argc++;}
     vpush((pointer) eus_msg._message);argc++;
@@ -491,6 +538,9 @@ public:
     *tmp++ = (uint8_t)((serialized_length >> 16) & 0xFF);
     *tmp++ = (uint8_t)((serialized_length >> 24) & 0xFF);
     eus_res.serialize(tmp, 0);
+    // store connection header
+    eus_res._connection_header = params.connection_header;
+    StoreConnectionHeader(&eus_res);
 #if DEBUG
     cerr << "num bytes = " << params.response.num_bytes << endl;
     ROS_INFO("message_start =  %X",params.response.message_start);
@@ -546,12 +596,14 @@ pointer ROSEUS(register context *ctx,int n,pointer *argv)
     }
   } else error(E_NOSEQ);
 
+  // convert invalid node name charactors to _, we assume it is '-'
   for (unsigned int i=0; i < strlen(name); i++)
-    if ( ! isalpha(name[i]) ) name[i] = '_';
+    if ( ! (isalpha(name[i]) || isdigit(name[i])) ) name[i] = '_';
 
   K_ROSEUS_MD5SUM   = defkeyword(ctx,"MD5SUM-");
   K_ROSEUS_DATATYPE = defkeyword(ctx,"DATATYPE-");
   K_ROSEUS_DEFINITION = defkeyword(ctx,"DEFINITION-");
+  K_ROSEUS_CONNECTION_HEADER = intern(ctx,"_CONNECTION-HEADER",18,findpkg(makestring("ROS",3)));
   K_ROSEUS_SERIALIZATION_LENGTH = defkeyword(ctx,"SERIALIZATION-LENGTH");
   K_ROSEUS_SERIALIZE   = defkeyword(ctx,"SERIALIZE");
   K_ROSEUS_DESERIALIZE = defkeyword(ctx,"DESERIALIZE");
@@ -602,7 +654,7 @@ pointer ROSEUS(register context *ctx,int n,pointer *argv)
   }
 
   s_node.reset(new ros::NodeHandle());
-  s_rate = new ros::Rate(50);
+  s_rate.reset(new ros::Rate(50));
 
   s_bInstalled = true;
 
@@ -706,7 +758,7 @@ pointer ROSEUS_RATE(register context *ctx,int n,pointer *argv)
   numunion nu;
   ckarg(1);
   float timeout=ckfltval(argv[0]);
-  s_rate = new ros::Rate(timeout);
+  s_rate.reset(new ros::Rate(timeout));
   return(T);
 }
 
@@ -715,6 +767,16 @@ pointer ROSEUS_SLEEP(register context *ctx,int n,pointer *argv)
   isInstalledCheck;
   s_rate->sleep();
   return (T);
+}
+
+pointer ROSEUS_DURATION_SLEEP(register context *ctx,int n,pointer *argv)
+{
+  isInstalledCheck;
+  numunion nu;
+  ckarg(1);
+  float sleep=ckfltval(argv[0]);
+  ros::Duration(sleep).sleep();
+  return(T);
 }
 
 pointer ROSEUS_OK(register context *ctx,int n,pointer *argv)
@@ -1073,7 +1135,35 @@ pointer ROSEUS_SERVICE_CALL(register context *ctx,int n,pointer *argv)
     }
   }
     // NEED FIX
-  bool bSuccess =  client.call(request, response, request.__getMD5Sum());
+  //bool bSuccess =  client.call(request, response, request.__getMD5Sum());
+  ros::ServiceServerLinkPtr link;
+  link = ros::ServiceManager::instance()->createServiceServerLink(client.getService(), client.isPersistent(), request.__getMD5Sum(), request.__getMD5Sum(), M_string());
+  ros::SerializedMessage ser_req = ros::serialization::serializeMessage(request);
+  ros::SerializedMessage ser_resp;
+  bool bSuccess = link->call(ser_req, ser_resp);
+  if ( bSuccess ) {
+    try {
+      ros::serialization::deserializeMessage(ser_resp, response);
+    } catch (std::exception& e) {
+      ROS_ERROR("Exception thrown while while deserializing service call: %s", e.what());
+      bSuccess = false;
+    }
+    boost::shared_ptr<map<string, string> >connection_header = link->getConnection()->getHeader().getValues();
+#if DEBUG
+    cerr << __PRETTY_FUNCTION__ << endl;
+    cerr << "c_header == " << connection_header << endl;
+    for(map<string, string>::iterator it = connection_header->begin(); it != connection_header->end(); it++){
+      cerr << "            " << it->first << " : " << it->second << endl;
+    }
+#endif
+    response._connection_header = connection_header;
+    StoreConnectionHeader(&response);
+    link.reset();
+    // If we're shutting down but the node haven't finished yet, wait until we do
+    while (ros::isShuttingDown() && ros::ok()) {
+      ros::WallDuration(0.001).sleep();
+    }
+  }
   vpop();                       // pop response._message
   vpop();                       // pop request._message
   if ( ! bSuccess ) {
@@ -1455,17 +1545,47 @@ pointer ROSEUS_ROSPACK_FIND(register context *ctx,int n,pointer *argv)
 
   try {
 #ifdef ROSPACK_EXPORT
-      rospack::ROSPack rp;
       rospack::Package *p = rp.get_pkg(pkg);
       if (p!=NULL) return(makestring((char *)p->path.c_str(),p->path.length()));
 #else
-      rospack::Rospack rp;
-      std::vector<std::string> search_path;
-      rp.getSearchPathFromEnv(search_path);
-      rp.crawl(search_path, 1);
       std::string path;
       if (rp.find(pkg,path)==true) return(makestring((char *)path.c_str(),path.length()));
 #endif
+  } catch (runtime_error &e) {
+  }
+  return(NIL);
+}
+
+pointer ROSEUS_ROSPACK_DEPENDS(register context *ctx,int n,pointer *argv)
+{
+  // (ros::rospack-depends package-name)
+  ckarg(1);
+
+  string pkg;
+  if (isstring(argv[0])) pkg.assign((char *)get_string(argv[0]));
+  else error(E_NOSTRING);
+
+  try {
+      // not sure why need this, otherwise failed in ImportError: /usr/lib/python2.7/lib-dynload/_elementtree.x86_64-linux-gnu.so: undefined symbol: PyExc_RuntimeError
+      std::vector<std::string> flags;
+      std::vector<rospack::Stackage*> stackages;
+      if(!rp.depsOnDetail(pkg, true, stackages, true))
+        return (NIL);
+      //
+      std::vector<std::string> deps;
+      if (rp.deps(pkg,false,deps)) {
+        register pointer ret, first;
+        ret=cons(ctx, NIL, NIL);
+        first = ret;
+        vpush(ret);
+        for (std::vector<std::string>::iterator it = deps.begin() ; it != deps.end(); it++) {
+          const std::string& dep = *it;
+          ccdr(ret) = cons(ctx, makestring((char *)dep.c_str(), dep.length()), NIL);
+          ret = ccdr(ret);
+        }
+        vpop(); // vpush(ret)
+        return ccdr(first);
+      }
   } catch (runtime_error &e) {
   }
   return(NIL);
@@ -1482,10 +1602,6 @@ pointer ROSEUS_ROSPACK_PLUGINS(register context *ctx,int n,pointer *argv)
   if (isstring(argv[1])) attrib.assign((char *)get_string(argv[1]));
   else error(E_NOSTRING);
   try {
-      rospack::Rospack rp;
-      std::vector<std::string> search_path;
-      rp.getSearchPathFromEnv(search_path);
-      rp.crawl(search_path, 1);
       std::vector<std::string> flags;
       if (rp.plugins(pkg, attrib, "", flags)) {
           ret = cons(ctx, NIL, NIL);
@@ -1662,7 +1778,6 @@ public:
   }
   void operator()(const ros::TimerEvent& event)
   {
-    mutex_trylock(&mark_lock);
     context *ctx = current_ctx;
     pointer argp=_args;
     int argc=0;
@@ -1696,7 +1811,6 @@ public:
     ufuncall(ctx,(ctx->callfp?ctx->callfp->form:NIL),_scb,(pointer)(ctx->vsp-argc),NULL,argc);
     while(argc-->0)vpop();
 
-    mutex_unlock(&mark_lock);
   }
 };
 
@@ -1710,7 +1824,6 @@ pointer ROSEUS_CREATE_TIMER(register context *ctx,int n,pointer *argv)
   string fncallname;
   float period=ckfltval(argv[0]);
 
-  mutex_trylock(&mark_lock);
   // period callbackfunc args0 ... argsN [ oneshot ]
   // ;; oneshot ;;
   if (n > 1 && issymbol(argv[n-2]) && issymbol(argv[n-1])) {
@@ -1755,7 +1868,6 @@ pointer ROSEUS_CREATE_TIMER(register context *ctx,int n,pointer *argv)
   ROS_DEBUG("create timer %s at %f (oneshot=%d)", fncallname.c_str(), period, oneshot);
   s_mapTimered[fncallname] = lnode->createTimer(ros::Duration(period), TimerFunction(fncallback, args), oneshot);
 
-  mutex_unlock(&mark_lock);
   return (T);
 }
 
@@ -1763,15 +1875,16 @@ pointer ROSEUS_CREATE_TIMER(register context *ctx,int n,pointer *argv)
  *   __roseus
  ************************************************************/
 extern pointer K_FUNCTION_DOCUMENTATION;
-pointer _defun(context *ctx, char *name, pointer mod, pointer (*f)(), char *doc) {
-  pointer sym = defun(ctx,name, mod, f);
-  if(strcmp(doc, "")) {
-    pointer pdoc = makestring(doc,strlen(doc));
-    vpush(pdoc); putprop(ctx,sym,pdoc,K_FUNCTION_DOCUMENTATION); vpop();}
-  return sym;}
-
+#include "defun.h"
 pointer ___roseus(register context *ctx, int n, pointer *argv, pointer env)
 {
+#ifdef ROSPACK_EXPORT
+#else
+  std::vector<std::string> search_path;
+  rp.getSearchPathFromEnv(search_path);
+  rp.crawl(search_path, 1);
+#endif
+
   pointer rospkg,p=Spevalof(PACKAGE);
   rospkg=findpkg(makestring("ROS",3));
   if (rospkg == 0) rospkg=makepkg(ctx,makestring("ROS", 3),NIL,NIL);
@@ -1784,27 +1897,28 @@ pointer ___roseus(register context *ctx, int n, pointer *argv, pointer env)
   QROSWARN=defvar(ctx,"*ROSWARN*",makeint(3),rospkg);
   QROSERROR=defvar(ctx,"*ROSERROR*",makeint(4),rospkg);
   QROSFATAL=defvar(ctx,"*ROSFATAL*",makeint(5),rospkg);
-  _defun(ctx,"SPIN",argv[0],(pointer (*)())ROSEUS_SPIN, "Enter simple event loop");
+  defun(ctx,"SPIN",argv[0],(pointer (*)())ROSEUS_SPIN, "Enter simple event loop");
 
-  _defun(ctx,"SPIN-ONCE",argv[0],(pointer (*)())ROSEUS_SPINONCE,
+  defun(ctx,"SPIN-ONCE",argv[0],(pointer (*)())ROSEUS_SPINONCE,
          "&optional groupname  ;; spin only group\n\n"
          "Process a single round of callbacks.\n");
-  _defun(ctx,"TIME-NOW-RAW",argv[0],(pointer (*)())ROSEUS_TIME_NOW, "");
-  _defun(ctx,"RATE",argv[0],(pointer (*)())ROSEUS_RATE, "frequency\n\n" "Construct ros timer for periodic sleeps");
-  _defun(ctx,"SLEEP",argv[0],(pointer (*)())ROSEUS_SLEEP, "Sleeps for any leftover time in a cycle. Calculated from the last time sleep, reset, or the constructor was called.");
-  _defun(ctx,"OK",argv[0],(pointer (*)())ROSEUS_OK, "Check whether it's time to exit. ");
+  defun(ctx,"TIME-NOW-RAW",argv[0],(pointer (*)())ROSEUS_TIME_NOW, "");
+  defun(ctx,"RATE",argv[0],(pointer (*)())ROSEUS_RATE, "frequency\n\n" "Construct ros timer for periodic sleeps");
+  defun(ctx,"SLEEP",argv[0],(pointer (*)())ROSEUS_SLEEP, "Sleeps for any leftover time in a cycle. Calculated from the last time sleep, reset, or the constructor was called.");
+  defun(ctx,"DURATION-SLEEP",argv[0],(pointer (*)())ROSEUS_DURATION_SLEEP, "second\n\nSleeps for amount of the time specified by this duration.");
+  defun(ctx,"OK",argv[0],(pointer (*)())ROSEUS_OK, "Check whether it's time to exit. ");
 
-  _defun(ctx,"ROS-DEBUG",argv[0],(pointer (*)())ROSEUS_ROSDEBUG,
+  defun(ctx,"ROS-DEBUG",argv[0],(pointer (*)())ROSEUS_ROSDEBUG,
          "write mesage to debug output\n"
          "\n"
          "	(ros::ros-debug \"this is error ~A\" 0)\n");
-  _defun(ctx,"ROS-INFO",argv[0],(pointer (*)())ROSEUS_ROSINFO, "write mesage to info output");
-  _defun(ctx,"ROS-WARN",argv[0],(pointer (*)())ROSEUS_ROSWARN, "write mesage to warn output");
-  _defun(ctx,"ROS-ERROR",argv[0],(pointer (*)())ROSEUS_ROSERROR, "write mesage to error output");
-  _defun(ctx,"ROS-FATAL",argv[0],(pointer (*)())ROSEUS_ROSFATAL, "write mesage to fatal output");
-  _defun(ctx,"EXIT",argv[0],(pointer (*)())ROSEUS_EXIT, "Exit ros clinet");
+  defun(ctx,"ROS-INFO",argv[0],(pointer (*)())ROSEUS_ROSINFO, "write mesage to info output");
+  defun(ctx,"ROS-WARN",argv[0],(pointer (*)())ROSEUS_ROSWARN, "write mesage to warn output");
+  defun(ctx,"ROS-ERROR",argv[0],(pointer (*)())ROSEUS_ROSERROR, "write mesage to error output");
+  defun(ctx,"ROS-FATAL",argv[0],(pointer (*)())ROSEUS_ROSFATAL, "write mesage to fatal output");
+  defun(ctx,"EXIT",argv[0],(pointer (*)())ROSEUS_EXIT, "Exit ros clinet");
 
-  _defun(ctx,"SUBSCRIBE",argv[0],(pointer (*)())ROSEUS_SUBSCRIBE,
+  defun(ctx,"SUBSCRIBE",argv[0],(pointer (*)())ROSEUS_SUBSCRIBE,
          "topicname message_type callbackfunc args0 ... argsN &optional (queuesize 1) %key (:groupname groupname)\n\n"
          "Subscribe to a topic, version for class member function with bare pointer.\n"
          "This method connects to the master to register interest in a given topic. The node will automatically be connected with publishers on this topic. On each message receipt, fp is invoked and passed a shared pointer to the message received. This message should not be changed in place, as it is shared with any other subscriptions to this topic.\n"
@@ -1826,16 +1940,16 @@ pointer ___roseus(register context *ctx, int n, pointer *argv, pointer env)
          "	  (:string-cb (msg) (print (list 'cb self (send msg :data)))))\n"
          "	(setq m (instance string-cb-class :init))\n"
          );
-  _defun(ctx,"UNSUBSCRIBE",argv[0],(pointer (*)())ROSEUS_UNSUBSCRIBE, "topicname\n\n""Unsubscribe topic");
-  _defun(ctx,"GET-NUM-PUBLISHERS",argv[0],(pointer (*)())ROSEUS_GETNUMPUBLISHERS, "Returns the number of publishers this subscriber is connected to. ");
-  _defun(ctx,"GET-TOPIC-SUBSCRIBER",argv[0],(pointer (*)())ROSEUS_GETTOPICSUBSCRIBER, "topicname\n\n""Retuns the name of topic if it already subscribed");
-  _defun(ctx,"ADVERTISE",argv[0],(pointer (*)())ROSEUS_ADVERTISE,
+  defun(ctx,"UNSUBSCRIBE",argv[0],(pointer (*)())ROSEUS_UNSUBSCRIBE, "topicname\n\n""Unsubscribe topic");
+  defun(ctx,"GET-NUM-PUBLISHERS",argv[0],(pointer (*)())ROSEUS_GETNUMPUBLISHERS, "Returns the number of publishers this subscriber is connected to. ");
+  defun(ctx,"GET-TOPIC-SUBSCRIBER",argv[0],(pointer (*)())ROSEUS_GETTOPICSUBSCRIBER, "topicname\n\n""Retuns the name of topic if it already subscribed");
+  defun(ctx,"ADVERTISE",argv[0],(pointer (*)())ROSEUS_ADVERTISE,
          "topic message_class &optional (queuesize 1) (latch nil)\n"
          "Advertise a topic.\n"
          "This call connects to the master to publicize that the node will be publishing messages on the given topic. This method returns a Publisher that allows you to publish a message on this topic.\n"
          "	(ros::advertise \"chatter\" std_msgs::string 1)");
-  _defun(ctx,"UNADVERTISE",argv[0],(pointer (*)())ROSEUS_UNADVERTISE, "Unadvertise topic");
-  _defun(ctx,"PUBLISH",argv[0],(pointer (*)())ROSEUS_PUBLISH,
+  defun(ctx,"UNADVERTISE",argv[0],(pointer (*)())ROSEUS_UNADVERTISE, "Unadvertise topic");
+  defun(ctx,"PUBLISH",argv[0],(pointer (*)())ROSEUS_PUBLISH,
          "topic message\n\n"
          "Publish a message on the topic\n"
          "	(ros::roseus \"talker\")\n"
@@ -1846,12 +1960,12 @@ pointer ___roseus(register context *ctx, int n, pointer *argv, pointer env)
          "	  (send msg :data (format nil \"hello world ~a\" (send (ros::time-now) :sec-nsec)))\n"
          "	  (ros::publish \"chatter\" msg)\n"
          "	  (ros::sleep))\n");
-  _defun(ctx,"GET-NUM-SUBSCRIBERS",argv[0],(pointer (*)())ROSEUS_GETNUMSUBSCRIBERS, "Retuns number of subscribers this publish is connected to");
-  _defun(ctx,"GET-TOPIC-PUBLISHER",argv[0],(pointer (*)())ROSEUS_GETTOPICPUBLISHER, "topicname\n\n""Retuns the name of topic if it already published");
+  defun(ctx,"GET-NUM-SUBSCRIBERS",argv[0],(pointer (*)())ROSEUS_GETNUMSUBSCRIBERS, "Retuns number of subscribers this publish is connected to");
+  defun(ctx,"GET-TOPIC-PUBLISHER",argv[0],(pointer (*)())ROSEUS_GETTOPICPUBLISHER, "topicname\n\n""Retuns the name of topic if it already published");
 
-  _defun(ctx,"WAIT-FOR-SERVICE",argv[0],(pointer (*)())ROSEUS_WAIT_FOR_SERVICE, "servicename &optional timeout\n\n""Wait for a service to be advertised and available. Blocks until it is.");
-  _defun(ctx,"SERVICE-EXISTS", argv[0], (pointer (*)())ROSEUS_SERVICE_EXISTS, "servicename\n\n""Checks if a service is both advertised and available.");
-  _defun(ctx,"SERVICE-CALL",argv[0],(pointer (*)())ROSEUS_SERVICE_CALL, 
+  defun(ctx,"WAIT-FOR-SERVICE",argv[0],(pointer (*)())ROSEUS_WAIT_FOR_SERVICE, "servicename &optional timeout\n\n""Wait for a service to be advertised and available. Blocks until it is.");
+  defun(ctx,"SERVICE-EXISTS", argv[0], (pointer (*)())ROSEUS_SERVICE_EXISTS, "servicename\n\n""Checks if a service is both advertised and available.");
+  defun(ctx,"SERVICE-CALL",argv[0],(pointer (*)())ROSEUS_SERVICE_CALL,
          "servicename message_type &optional persist\n\n"
          "Invoke RPC service\n"
          "	(ros::roseus \"add_two_ints_client\")\n"
@@ -1861,41 +1975,42 @@ pointer ___roseus(register context *ctx, int n, pointer *argv, pointer env)
          "	(send req :b (random 20))\n"
          "	(setq res (ros::service-call \"add_two_ints\" req t))\n"
          "	(format t \"~d + ~d = ~d~~%\" (send req :a) (send req :b) (send res :sum))\n");
-  _defun(ctx,"ADVERTISE-SERVICE",argv[0],(pointer (*)())ROSEUS_ADVERTISE_SERVICE,
+  defun(ctx,"ADVERTISE-SERVICE",argv[0],(pointer (*)())ROSEUS_ADVERTISE_SERVICE,
          "servicename message_type callback function\n\n"
          "Advertise a service\n"
          "	(ros::advertise-service \"add_two_ints\" roseus::AddTwoInts #'add-two-ints)");
-  _defun(ctx,"UNADVERTISE-SERVICE",argv[0],(pointer (*)())ROSEUS_UNADVERTISE_SERVICE, "Unadvertise service");
+  defun(ctx,"UNADVERTISE-SERVICE",argv[0],(pointer (*)())ROSEUS_UNADVERTISE_SERVICE, "Unadvertise service");
 
-  _defun(ctx,"SET-PARAM",argv[0],(pointer (*)())ROSEUS_SET_PARAM, "key value\n\n""Set parameter");
-  _defun(ctx,"GET-PARAM",argv[0],(pointer (*)())ROSEUS_GET_PARAM, "key\n\n""Get parameter");
-  _defun(ctx,"GET-PARAM-CACHED",argv[0],(pointer (*)())ROSEUS_GET_PARAM_CACHED, "Get chached parameter");
-  _defun(ctx,"HAS-PARAM",argv[0],(pointer (*)())ROSEUS_HAS_PARAM, "Check whether a parameter exists on the parameter server.");
-  _defun(ctx,"DELETE-PARAM",argv[0],(pointer (*)())ROSEUS_DELETE_PARAM, "key\n\n""Delete parameter from server");
+  defun(ctx,"SET-PARAM",argv[0],(pointer (*)())ROSEUS_SET_PARAM, "key value\n\n""Set parameter");
+  defun(ctx,"GET-PARAM",argv[0],(pointer (*)())ROSEUS_GET_PARAM, "key\n\n""Get parameter");
+  defun(ctx,"GET-PARAM-CACHED",argv[0],(pointer (*)())ROSEUS_GET_PARAM_CACHED, "Get chached parameter");
+  defun(ctx,"HAS-PARAM",argv[0],(pointer (*)())ROSEUS_HAS_PARAM, "Check whether a parameter exists on the parameter server.");
+  defun(ctx,"DELETE-PARAM",argv[0],(pointer (*)())ROSEUS_DELETE_PARAM, "key\n\n""Delete parameter from server");
 
-  _defun(ctx,"ROSPACK-FIND",argv[0],(pointer (*)())ROSEUS_ROSPACK_FIND, "Returns ros package path");
-  _defun(ctx,"ROSPACK-PLUGINS",argv[0],(pointer (*)())ROSEUS_ROSPACK_PLUGINS, "Returns plugins of ros packages");
-  _defun(ctx,"RESOLVE-NAME",argv[0],(pointer (*)())ROSEUS_RESOLVE_NAME, "Returns ros resolved name");
-  _defun(ctx,"GET-NAME",argv[0],(pointer (*)())ROSEUS_GETNAME, "Returns current node name");
-  _defun(ctx,"GET-NAMESPACE",argv[0],(pointer (*)())ROSEUS_GETNAMESPACE, "Returns current node name space");
+  defun(ctx,"ROSPACK-FIND",argv[0],(pointer (*)())ROSEUS_ROSPACK_FIND, "Returns ros package path");
+  defun(ctx,"ROSPACK-PLUGINS",argv[0],(pointer (*)())ROSEUS_ROSPACK_PLUGINS, "Returns plugins of ros packages");
+  defun(ctx,"ROSPACK-DEPENDS",argv[0],(pointer (*)())ROSEUS_ROSPACK_DEPENDS, "Returns ros package dependencies list");
+  defun(ctx,"RESOLVE-NAME",argv[0],(pointer (*)())ROSEUS_RESOLVE_NAME, "Returns ros resolved name");
+  defun(ctx,"GET-NAME",argv[0],(pointer (*)())ROSEUS_GETNAME, "Returns current node name");
+  defun(ctx,"GET-NAMESPACE",argv[0],(pointer (*)())ROSEUS_GETNAMESPACE, "Returns current node name space");
 
-  _defun(ctx,"ROSEUS-RAW",argv[0],(pointer (*)())ROSEUS, "");
-  _defun(ctx,"CREATE-NODEHANDLE", argv[0], (pointer (*)())ROSEUS_CREATE_NODEHANDLE, "groupname &optional namespace  ;;\n\n"
+  defun(ctx,"ROSEUS-RAW",argv[0],(pointer (*)())ROSEUS, "");
+  defun(ctx,"CREATE-NODEHANDLE", argv[0], (pointer (*)())ROSEUS_CREATE_NODEHANDLE, "groupname &optional namespace  ;;\n\n"
          "Create ros NodeHandle with given group name. \n"
          "\n"
          "	(ros::roseus \"test\")\n"
          "	(ros::create-node-handle \"mygroup\")\n"
          "	(ros::subscribe \"/test\" std_msgs::String #'(lambda (m) (print m)) :groupname \"mygroup\")\n"
          "	(while (ros::ok)  (ros::spin-once \"mygroup\"))\n");
-  _defun(ctx,"SET-LOGGER-LEVEL",argv[0],(pointer (*)())ROSEUS_SET_LOGGER_LEVEL, "");
+  defun(ctx,"SET-LOGGER-LEVEL",argv[0],(pointer (*)())ROSEUS_SET_LOGGER_LEVEL, "");
 
-  _defun(ctx,"GET-HOST",argv[0],(pointer (*)())ROSEUS_GET_HOST, "Get the hostname where the master runs.");
-  _defun(ctx,"GET-NODES",argv[0],(pointer (*)())ROSEUS_GET_NODES, "Retreives the currently-known list of nodes from the master.");
-  _defun(ctx,"GET-PORT",argv[0],(pointer (*)())ROSEUS_GET_PORT, "Get the port where the master runs.");
-  _defun(ctx,"GET-URI",argv[0],(pointer (*)())ROSEUS_GET_URI, "Get the full URI to the master ");
-  _defun(ctx,"GET-TOPICS",argv[0],(pointer (*)())ROSEUS_GET_TOPICS, "Get the list of topics that are being published by all nodes.");
+  defun(ctx,"GET-HOST",argv[0],(pointer (*)())ROSEUS_GET_HOST, "Get the hostname where the master runs.");
+  defun(ctx,"GET-NODES",argv[0],(pointer (*)())ROSEUS_GET_NODES, "Retreives the currently-known list of nodes from the master.");
+  defun(ctx,"GET-PORT",argv[0],(pointer (*)())ROSEUS_GET_PORT, "Get the port where the master runs.");
+  defun(ctx,"GET-URI",argv[0],(pointer (*)())ROSEUS_GET_URI, "Get the full URI to the master ");
+  defun(ctx,"GET-TOPICS",argv[0],(pointer (*)())ROSEUS_GET_TOPICS, "Get the list of topics that are being published by all nodes.");
 
-  defun(ctx,"CREATE-TIMER",argv[0],(pointer (*)())ROSEUS_CREATE_TIMER);
+  defun(ctx,"CREATE-TIMER",argv[0],(pointer (*)())ROSEUS_CREATE_TIMER, "Create periodic callbacks.");
 
   pointer_update(Spevalof(PACKAGE),p);
 
