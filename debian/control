@@ -1,0 +1,12 @@
+Source: ros-lunar-roseus
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), coreutils, ros-lunar-actionlib, ros-lunar-actionlib-msgs, ros-lunar-actionlib-tutorials, ros-lunar-angles, ros-lunar-catkin, ros-lunar-dynamic-reconfigure, ros-lunar-euslisp, ros-lunar-geneus, ros-lunar-geometry-msgs, ros-lunar-jskeus, ros-lunar-message-generation, ros-lunar-mk, ros-lunar-rosbash, ros-lunar-rosbuild, ros-lunar-roscpp, ros-lunar-roslang, ros-lunar-rosmsg, ros-lunar-rosnode, ros-lunar-rospack, ros-lunar-rostest, ros-lunar-rostopic, ros-lunar-sensor-msgs, ros-lunar-std-msgs, ros-lunar-std-srvs, ros-lunar-tf, ros-lunar-tf2-ros, ros-lunar-visualization-msgs, xvfb
+Homepage: http://pr.willowgarage.com/wiki/roseus
+Standards-Version: 3.9.2
+
+Package: ros-lunar-roseus
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-lunar-actionlib, ros-lunar-actionlib-msgs, ros-lunar-actionlib-tutorials, ros-lunar-dynamic-reconfigure, ros-lunar-euslisp, ros-lunar-geneus, ros-lunar-geometry-msgs, ros-lunar-jskeus, ros-lunar-message-runtime, ros-lunar-rosbash, ros-lunar-roscpp, ros-lunar-roslang, ros-lunar-rosmsg, ros-lunar-rosnode, ros-lunar-rospack, ros-lunar-rostest, ros-lunar-sensor-msgs, ros-lunar-std-msgs, ros-lunar-std-srvs, ros-lunar-tf, ros-lunar-tf2-ros, ros-lunar-visualization-msgs
+Description: EusLisp client for ROs Robot Operating System.
