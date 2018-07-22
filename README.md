@@ -1,3 +1,34 @@
+## jsk_roseus (lunar) - 1.7.1-0
+
+The packages in the `jsk_roseus` repository were released into the `lunar` distro by running `/usr/bin/bloom-release -y jsk_roseus --track lunar --rosdistro lunar` on `Sun, 22 Jul 2018 05:51:35 -0000`
+
+These packages were released:
+- `jsk_roseus`
+- `roseus`
+- `roseus_smach`
+
+These packages were explicitly ignored:
+- `roseus_msgs`
+- `roseus_mongo`
+- `roseus_tutorials`
+
+Version of package(s) in repository `jsk_roseus`:
+
+- upstream repository: https://github.com/jsk-ros-pkg/jsk_roseus
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `1.7.1-0`
+
+Versions of tools used:
+
+- bloom version: `0.6.6`
+- catkin_pkg version: `0.4.2`
+- rosdep version: `0.12.2`
+- rosdistro version: `0.6.8`
+- vcstools version: `0.1.40`
+
+
 ## jsk_roseus (kinetic) - 1.7.1-0
 
 The packages in the `jsk_roseus` repository were released into the `kinetic` distro by running `/usr/bin/bloom-release -y jsk_roseus --track kinetic --rosdistro kinetic` on `Sun, 22 Jul 2018 05:36:46 -0000`
