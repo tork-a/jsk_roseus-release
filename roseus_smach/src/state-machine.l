@@ -75,7 +75,7 @@
   (:sub-sm-node () (remove-if-not #'(lambda(n)(send n :submachine)) nodes))
   ;; @ from,to: state instance or its name
   ;; @ exec-result: trans state when execution at from-state returns this.
-  ;;                must be {number,string,symbol} or list of these
+  ;;                must be {number,string,symbol}.
   (:add-transition
    (from to exec-result &key (test #'equal))
    (when (not (derivedp from state))
@@ -186,7 +186,7 @@
   (:remap (userdata &key (invert nil))
    (dolist (ft remap-list)
      (when (and (not invert) (not (assoc (cdr ft) userdata)))
-       (nconc (list (cons (cdr ft) nil)) userdata))
+       (nconc userdata (list (cons (cdr ft) nil))))
      (if invert
          (setf (car (assoc (car ft) userdata)) (cdr ft))
          (setf (car (assoc (cdr ft) userdata)) (car ft)))))
