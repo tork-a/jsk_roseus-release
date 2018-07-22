@@ -91,6 +91,27 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
 
+# you need to run `catkin build --force-cmake` when you have updated eus.h
+# update function using defun() for https://github.com/euslisp/EusLisp/pull/116
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/test-defun.c "#include \"eus.h\"\nvoid TEST();\nvoid test(void) {register context *ctx; pointer mod; defun(ctx,\"TEST\",mod,TEST,NULL);}")
+get_directory_property(__CMAKE_COMPILE_DEFINITIONS DIRECTORY ${CMAKE_SOURCE_DIR} COMPILE_DEFINITIONS)
+set(__CMAKE_COMPILE_DEFINITION "")
+foreach(__D ${__CMAKE_COMPILE_DEFINITIONS})
+  set(__CMAKE_COMPILE_DEFINITION ${__CMAKE_COMPILE_DEFINITION} -D${__D})
+endforeach()
+message(STATUS "Running test file to check defun() API, see https://github.com/euslisp/EusLisp/pull/116")
+execute_process (COMMAND ${CMAKE_C_COMPILER} -I${euslisp_INCLUDE_DIRS} ${__CMAKE_COMPILE_DEFINITION} -c test-defun.c
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  RESULT_VARIABLE TEST_DEFUN)
+file(WRITE ${PROJECT_SOURCE_DIR}/defun.h "// redefine defun for update defun() API (https://github.com/euslisp/EusLisp/pull/116)\n")
+if(${TEST_DEFUN})
+  message(STATUS "add defin() macro for euslisp < 9.24")
+  file(APPEND ${PROJECT_SOURCE_DIR}/defun.h "#undef defun\n")
+  file(APPEND ${PROJECT_SOURCE_DIR}/defun.h "#define defun(a, b, c, d, e) defun(a, b, c, d) // for EusLisp < 9.24\n")
+endif()
+
+
+
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(roseus ${Boost_LIBRARIES})
 
@@ -102,7 +123,7 @@ add_service_files(
   FILES AddTwoInts.srv StringString.srv
 )
 add_message_files(
-  FILES String.msg StringStamped.msg FixedArray.msg VariableArray.msg
+  FILES String.msg StringStamped.msg FixedArray.msg VariableArray.msg TestName.msg
 )
 
 generate_messages(
@@ -155,6 +176,7 @@ if(CATKIN_ENABLE_TESTING)
   add_rostest(test/test-talker-listener.test)
   add_rostest(test/test-talker-listener-private-topic.test)
   add_rostest(test/test-add-two-ints.test)
+  add_rostest(test/test-add-two-ints-server.test)
   add_rostest(test/test-service-callback.test)
   add_rostest(test/test-simple-client.test)
   add_rostest(test/test-simple-client-wait.test)
@@ -163,10 +185,12 @@ if(CATKIN_ENABLE_TESTING)
   add_rostest(test/test-simple-client-cancel.test)
   add_rostest(test/test-actionlib.test)
   add_rostest(test/test-roseus.test)
+  add_rostest(test/test-mark-lock.test)
   add_rostest(test/test-tf.test)
   add_rostest(test/test-disconnect.test)
   add_rostest(test/test-multi-queue.test)
   add_rostest(test/test-namespace.test)
+  add_rostest(test/test-nodename.test)
   add_rostest(test/test-parameter.test)
   add_rostest(test/test-anonymous.test)
   add_rostest(test/test-timer.test)
