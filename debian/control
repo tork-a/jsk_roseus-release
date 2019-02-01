@@ -1,0 +1,12 @@
+Source: ros-melodic-roseus
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), coreutils, ros-melodic-actionlib, ros-melodic-actionlib-msgs, ros-melodic-actionlib-tutorials, ros-melodic-angles, ros-melodic-catkin, ros-melodic-dynamic-reconfigure, ros-melodic-euslisp, ros-melodic-geneus, ros-melodic-geometry-msgs, ros-melodic-jskeus, ros-melodic-message-generation, ros-melodic-mk, ros-melodic-rosbash, ros-melodic-rosbuild, ros-melodic-roscpp, ros-melodic-roslang, ros-melodic-rosmsg, ros-melodic-rosnode, ros-melodic-rospack, ros-melodic-rostest, ros-melodic-rostopic, ros-melodic-sensor-msgs, ros-melodic-std-msgs, ros-melodic-std-srvs, ros-melodic-tf, ros-melodic-tf2-ros, ros-melodic-visualization-msgs, xvfb
+Homepage: http://pr.willowgarage.com/wiki/roseus
+Standards-Version: 3.9.2
+
+Package: ros-melodic-roseus
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-actionlib, ros-melodic-actionlib-msgs, ros-melodic-actionlib-tutorials, ros-melodic-dynamic-reconfigure, ros-melodic-euslisp, ros-melodic-geneus, ros-melodic-geometry-msgs, ros-melodic-jskeus, ros-melodic-message-runtime, ros-melodic-rosbash, ros-melodic-roscpp, ros-melodic-roslang, ros-melodic-rosmsg, ros-melodic-rosnode, ros-melodic-rospack, ros-melodic-rostest, ros-melodic-sensor-msgs, ros-melodic-std-msgs, ros-melodic-std-srvs, ros-melodic-tf, ros-melodic-tf2-ros, ros-melodic-visualization-msgs
+Description: EusLisp client for ROS Robot Operating System.
