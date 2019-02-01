@@ -1,1 +1,0 @@
-roseus/StringStamped name
