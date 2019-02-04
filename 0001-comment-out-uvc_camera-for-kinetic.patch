@@ -1,4 +1,4 @@
-From fc3d7f042077d6f04477390ea0726bcb9f8a1c17 Mon Sep 17 00:00:00 2001
+From ed89672e7e3aa52ad901fe95dd56eb112590af73 Mon Sep 17 00:00:00 2001
 From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
 Date: Sat, 11 Mar 2017 10:43:15 +0900
 Subject: [PATCH] comment out uvc_camera for kinetic
@@ -8,7 +8,7 @@ Subject: [PATCH] comment out uvc_camera for kinetic
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/package.xml b/package.xml
-index 0cc36057c..fab6ce94d 100644
+index 11235cf12..921cffc09 100644
 --- a/package.xml
 +++ b/package.xml
 @@ -19,7 +19,7 @@
