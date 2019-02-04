@@ -2,6 +2,9 @@
 Changelog for package roseus_smach
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.7.4 (2019-02-04)
+------------------
+
 1.7.3 (2019-02-01)
 ------------------
 * check why test-smach-action-client-state failing on installed test (`#570 <https://github.com/jsk-ros-pkg/jsk_roseus/issues/570>`_ )
