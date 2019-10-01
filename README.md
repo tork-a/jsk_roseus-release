@@ -1,3 +1,34 @@
+## jsk_roseus (melodic) - 1.7.4-1
+
+The packages in the `jsk_roseus` repository were released into the `melodic` distro by running `/usr/bin/bloom-release jsk_roseus --track melodic --rosdistro melodic` on `Tue, 01 Oct 2019 13:30:15 -0000`
+
+These packages were released:
+- `jsk_roseus`
+- `roseus`
+- `roseus_mongo`
+- `roseus_smach`
+- `roseus_tutorials`
+
+These packages were explicitly ignored:
+- `roseus_msgs`
+
+Version of package(s) in repository `jsk_roseus`:
+
+- upstream repository: https://github.com/jsk-ros-pkg/jsk_roseus
+- release repository: https://github.com/tork-a/jsk_roseus-release.git
+- rosdistro version: `1.7.4-0`
+- old version: `1.7.4-0`
+- new version: `1.7.4-1`
+
+Versions of tools used:
+
+- bloom version: `0.8.0`
+- catkin_pkg version: `0.4.12`
+- rosdep version: `0.15.2`
+- rosdistro version: `0.7.4`
+- vcstools version: `0.1.42`
+
+
 ## jsk_roseus (indigo) - 1.7.4-0
 
 The packages in the `jsk_roseus` repository were released into the `indigo` distro by running `/usr/bin/bloom-release -y jsk_roseus --track indigo --rosdistro indigo` on `Mon, 04 Feb 2019 06:59:46 -0000`
