@@ -1,0 +1,12 @@
+Source: ros-melodic-roseus-tutorials
+Section: misc
+Priority: extra
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-melodic-catkin, ros-melodic-roseus, ros-melodic-rostest
+Homepage: http://ros.org/wiki/roseus_tutorials
+Standards-Version: 3.9.2
+
+Package: ros-melodic-roseus-tutorials
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-melodic-ar-track-alvar, ros-melodic-checkerboard-detector, ros-melodic-image-proc, ros-melodic-image-view2, ros-melodic-jsk-recognition-msgs, ros-melodic-opencv-apps, ros-melodic-posedetection-msgs, ros-melodic-uvc-camera, ros-melodic-visualization-msgs
+Description: roseus_tutorials
