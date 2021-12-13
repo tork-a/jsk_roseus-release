@@ -1,0 +1,12 @@
+Source: ros-noetic-roseus-tutorials
+Section: misc
+Priority: optional
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-noetic-catkin, ros-noetic-jsk-pcl-ros, ros-noetic-roseus, ros-noetic-rostest
+Homepage: http://ros.org/wiki/roseus_tutorials
+Standards-Version: 3.9.2
+
+Package: ros-noetic-roseus-tutorials
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-noetic-checkerboard-detector, ros-noetic-image-proc, ros-noetic-image-view2, ros-noetic-jsk-recognition-msgs, ros-noetic-opencv-apps, ros-noetic-posedetection-msgs, ros-noetic-visualization-msgs
+Description: roseus_tutorials
