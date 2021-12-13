@@ -1,0 +1,12 @@
+Source: ros-noetic-jsk-roseus
+Section: misc
+Priority: optional
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-noetic-catkin
+Homepage: http://ros.org/wiki/jsk_roseus
+Standards-Version: 3.9.2
+
+Package: ros-noetic-jsk-roseus
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-noetic-euslisp, ros-noetic-geneus, ros-noetic-roseus
+Description: Metapackage that contains roseus package for jsk-ros-pkg
