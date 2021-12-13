@@ -1,3 +1,33 @@
+## jsk_roseus (noetic) - 1.7.5-1
+
+The packages in the `jsk_roseus` repository were released into the `noetic` distro by running `/usr/bin/bloom-release --rosdistro noetic --track noetic jsk_roseus` on `Mon, 13 Dec 2021 09:40:50 -0000`
+
+These packages were released:
+- `jsk_roseus`
+- `roseus`
+- `roseus_smach`
+- `roseus_tutorials`
+
+These packages were explicitly ignored:
+- `roseus_mongo`
+
+Version of package(s) in repository `jsk_roseus`:
+
+- upstream repository: https://github.com/jsk-ros-pkg/jsk_roseus
+- release repository: unknown
+- rosdistro version: `null`
+- old version: `null`
+- new version: `1.7.5-1`
+
+Versions of tools used:
+
+- bloom version: `0.10.7`
+- catkin_pkg version: `0.4.23`
+- rosdep version: `0.21.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## jsk_roseus (melodic) - 1.7.4-1
 
 The packages in the `jsk_roseus` repository were released into the `melodic` distro by running `/usr/bin/bloom-release jsk_roseus --track melodic --rosdistro melodic` on `Tue, 01 Oct 2019 13:30:15 -0000`
