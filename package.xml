@@ -19,8 +19,8 @@
 
   <build_depend>roseus</build_depend>
 
-  <run_depend>uvc_camera</run_depend>
-  <run_depend>ar_track_alvar</run_depend>
+  <!-- <run_depend>uvc_camera</run_depend> -->
+  <!-- <run_depend>ar_track_alvar</run_depend> -->
   <run_depend>opencv_apps</run_depend>
   <!-- <run_depend>saliency_tracking<run_depend> -->
   <!-- <depend package="cmvision" /> -->
