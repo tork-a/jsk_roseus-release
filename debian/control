@@ -1,0 +1,13 @@
+Source: ros-noetic-roseus-smach
+Section: misc
+Priority: optional
+Maintainer: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Build-Depends: debhelper (>= 9.0.0), ros-noetic-actionlib, ros-noetic-actionlib-tutorials, ros-noetic-catkin, ros-noetic-message-generation, ros-noetic-roseus, ros-noetic-rostest, ros-noetic-smach, ros-noetic-smach-msgs, ros-noetic-smach-ros, ros-noetic-std-msgs
+Homepage: http://ros.org/wiki/roseus_smach
+Standards-Version: 3.9.2
+
+Package: ros-noetic-roseus-smach
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-noetic-actionlib, ros-noetic-actionlib-tutorials, ros-noetic-euslisp, ros-noetic-message-runtime, ros-noetic-roseus, ros-noetic-rostest, ros-noetic-smach, ros-noetic-smach-msgs, ros-noetic-smach-ros, ros-noetic-std-msgs
+Description: roseus_smach * Euslisp state machine class.
+ it will be moved. * Message publisher for visualizing current state by smach_viewer. * Simple pickle dump script for debugging state machine. * Execute state machine as a action server.
