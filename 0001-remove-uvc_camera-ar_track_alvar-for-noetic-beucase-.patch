@@ -1,0 +1,28 @@
+From d83b8edaa5b5e1f2ee05c497823abf06c188803e Mon Sep 17 00:00:00 2001
+From: Kei Okada <k-okada@jsk.t.u-tokyo.ac.jp>
+Date: Mon, 13 Dec 2021 18:42:21 +0900
+Subject: [PATCH] remove uvc_camera, ar_track_alvar for noetic, beucase it is
+ not released
+
+---
+ package.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/package.xml b/package.xml
+index e521d2203..37ba86269 100644
+--- a/package.xml
++++ b/package.xml
+@@ -19,8 +19,8 @@
+ 
+   <build_depend>roseus</build_depend>
+ 
+-  <run_depend>uvc_camera</run_depend>
+-  <run_depend>ar_track_alvar</run_depend>
++  <!-- <run_depend>uvc_camera</run_depend> -->
++  <!-- <run_depend>ar_track_alvar</run_depend> -->
+   <run_depend>opencv_apps</run_depend>
+   <!-- <run_depend>saliency_tracking<run_depend> -->
+   <!-- <depend package="cmvision" /> -->
+-- 
+2.17.1
+
