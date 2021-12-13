@@ -1,6 +1,6 @@
 <package>
   <name>roseus_tutorials</name>
-  <version>1.7.4</version>
+  <version>1.7.5</version>
   <description>roseus_tutorials
  </description>
 
@@ -38,6 +38,7 @@
   <run_depend>jsk_recognition_msgs</run_depend>
   <!-- <run_depend>tabletop_object_detector</run_depend> -->
 
+  <test_depend>jsk_pcl_ros</test_depend>
   <test_depend>rostest</test_depend>
   <export>
   </export>
